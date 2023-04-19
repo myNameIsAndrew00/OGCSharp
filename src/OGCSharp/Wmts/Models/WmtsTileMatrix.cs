@@ -3,7 +3,7 @@ using OGCSharp;
 
 namespace OGCSharp.Geo.Wmts
 {
-    internal class WmtsTileMatrix : WmsElement
+    internal class WmtsTileMatrix : WmtsElement
     {
         public WmtsTileMatrix(XElement tileMatrixXml) : base(tileMatrixXml)
         {

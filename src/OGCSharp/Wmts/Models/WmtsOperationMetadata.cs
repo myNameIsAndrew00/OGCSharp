@@ -8,7 +8,7 @@ using System.Xml.Linq;
 
 namespace OGCSharp.Geo.Wmts
 {
-    internal class WmtsOperationMetadata : WmsElement
+    internal class WmtsOperationMetadata : WmtsElement
     {
         private XElement? getTileNode;
 
@@ -32,7 +32,7 @@ namespace OGCSharp.Geo.Wmts
             });
         }
 
-        public string? TileHref => getTileNode?.Attribute(WmsElement.XLinkNamespace + "href")?.Value;
+        public string? TileHref => getTileNode?.Attribute(WmtsElement.XLinkNamespace + "href")?.Value;
 
         // for now, only kvp tile nodes are supported to be parsed.
         public string? TileEncoding => getTileNode == null ? null : "KVP";

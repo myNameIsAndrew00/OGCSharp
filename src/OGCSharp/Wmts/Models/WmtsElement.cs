@@ -7,7 +7,7 @@ using System.Xml.Linq;
 
 namespace OGCSharp.Geo.Wmts
 {
-    internal class WmsElement
+    internal class WmtsElement
     {
         public const string OperationsMetadataNode = "OperationsMetadata";
         public const string OperationNode = "Operation";
@@ -48,7 +48,7 @@ namespace OGCSharp.Geo.Wmts
 
 
         protected XElement xmlNode;
-        public WmsElement(XElement xmlNode)
+        public WmtsElement(XElement xmlNode)
         {
             this.xmlNode = xmlNode;
         }

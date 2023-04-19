@@ -2,7 +2,7 @@
 
 namespace OGCSharp.Geo.Wmts
 {
-    internal class WmtsTileMatrixSet : WmsElement
+    internal class WmtsTileMatrixSet : WmtsElement
     {
 
         private IEnumerable<WmtsTileMatrix> tileMatrixes;

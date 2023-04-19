@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace OGCSharp.Geo
 {
@@ -14,20 +15,34 @@ namespace OGCSharp.Geo
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        public static string? DownloadCapabilites(string url)
+        public static async Task<XElement?> DownloadCapabilitesAsync(string url)
         {
-            //bypass certificate authentification
+            // Bypass certificate authentification
             HttpClientHandler clientHandler = new HttpClientHandler();
             clientHandler.ServerCertificateCustomValidationCallback = ((sender, cert, chain, errors) => true);
 
-            //download capabilities content
-            using (HttpClient client = new HttpClient(clientHandler))
+            try
             {
-                using (HttpResponseMessage responseMessage = client.GetAsync(url).Result)
+                // Download capabilities content then parse it to a XElement.
+                using (HttpClient client = new HttpClient(clientHandler))
                 {
-                    return responseMessage.Content.ReadAsStringAsync().Result;
+                    using (HttpResponseMessage responseMessage = await client.GetAsync(url))
+                    {
+                        string? rawResponse = await responseMessage.Content.ReadAsStringAsync();
+
+                        if (rawResponse != null)
+                        {
+                            return XElement.Parse(rawResponse);
+                        }
+                    }
                 }
             }
+            catch
+            {
+                // If any exception occurs during processing, fallback result is null.
+            }
+
+            return null;
         }
     }
 }

@@ -18,6 +18,6 @@ namespace OGCSharp.Geo.Abstractions
 
         string? URL { get; set; }
 
-        OGCServerType ServerType { get; }
+        OgcServerType ServerType { get; }
     }
 }

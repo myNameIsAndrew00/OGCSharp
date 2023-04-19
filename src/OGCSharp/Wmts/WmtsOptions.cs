@@ -2,7 +2,7 @@
 
 namespace OGCSharp.Geo.Wmts
 {
-    public class WmtsOptions
+    internal class WmtsOptions
     {
         public string? Layer { get; set; }
 
@@ -12,9 +12,9 @@ namespace OGCSharp.Geo.Wmts
 
         public List<string> Urls { get; set; } = new List<string>();
 
-         internal List<WmtsDimension> Dimensions { get; set; } = null!;
+        public List<WmtsDimension> Dimensions { get; set; } = null!;
 
-        internal WmtsTileGrid TileGrid { get; set; } = null!;
+        public WmtsTileGrid TileGrid { get; set; } = null!;
 
         public bool WrapX { get; set; }
 

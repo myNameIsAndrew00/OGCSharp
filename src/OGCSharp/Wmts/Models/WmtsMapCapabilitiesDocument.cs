@@ -7,7 +7,7 @@ namespace OGCSharp.Geo.Wmts
     /// <summary>
     /// Representsa a facade for an xelement which represents a wmpts map capabilities document
     /// </summary>
-    internal class WmtsMapCapabilitiesDocument : WmsElement
+    internal class WmtsMapCapabilitiesDocument : WmtsElement
     {
         private IEnumerable<WmtsTileMatrixSet> tileMatrixSets;
 

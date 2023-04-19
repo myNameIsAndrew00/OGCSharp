@@ -8,22 +8,22 @@ using System.Xml;
 
 namespace OGCSharp.Geo.Abstractions
 {
-    public interface IGeoCapabilitiesParser
+    public interface IOgcCapabilitiesParser
     {
         /// <summary>
         /// Parse capabilities for the given url.
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        public ICollection<ILayer>? ParseCapabilities(string url);
+        public Task<IReadOnlyCollection<ILayer>?> GetLayersAsync(string url);
 
         /// <summary>
         /// Parse capabilities for the given xml document.
         /// </summary>
         /// <param name="xmlDocument"></param>
         /// <returns></returns>
-        public ICollection<ILayer>? ParseCapabilities(XmlDocument xmlDocument);
+        public Task<IReadOnlyCollection<ILayer>?> GetLayersAsync(XmlDocument xmlDocument);
 
-        public OGCServerType Type { get; }
+        public OgcServerType Type { get; }
     }
 }

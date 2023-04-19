@@ -9,7 +9,7 @@ using System.Xml.Linq;
 namespace OGCSharp.Geo.Wmts
 {
 
-    internal class WmtsLayerNode : WmsElement
+    internal class WmtsLayerNode : WmtsElement
     {
         private WmtsTileMatrixSetLink tileMatrixSetLinkFacade;
 

@@ -3,7 +3,7 @@ using System.Xml.Linq;
 
 namespace OGCSharp.Geo.Wmts
 {
-    internal class WmtsTileMatrixSetLink : WmsElement
+    internal class WmtsTileMatrixSetLink : WmtsElement
     {
         private IEnumerable<WmtsTileMatrixLimit> limits;
 

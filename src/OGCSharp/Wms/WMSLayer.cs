@@ -1,22 +1,20 @@
 ﻿using OGCSharp.Geo.Abstractions;
 using OGCSharp.Geo.Types;
+using OGCSharp.Wms;
+using OGCSharp.Wms.Models;
 
 namespace OGCSharp.Geo.WMS
 {
-    internal class WMSLayer : ILayer
+    internal class WmsLayer : ILayer
     {
         public string? Title { get; set; }
 
         public string? Name { get; set; }
         
         public string? URL { get; set; }
-        
-        public List<Dimension<DateTime, TimeSpan>>? TimeDimensions { get; set; }
-        
-        public List<Dimension<decimal, decimal>>? Elevations { get; set; }
+    
+        public WmsOptions Options { get; set; } 
 
-        public List<WMSLayer>? Children { get; set; }
-
-        public OGCServerType ServerType => OGCServerType.WMS;
+        public OgcServerType ServerType => OgcServerType.WMS;
     }
 }
