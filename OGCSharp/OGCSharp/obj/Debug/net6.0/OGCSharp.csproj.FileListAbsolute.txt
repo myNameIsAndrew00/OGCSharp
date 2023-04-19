@@ -1,0 +1,12 @@
+D:\Work\OGCSharp\OGCSharp\OGCSharp\bin\Debug\net6.0\OGCSharp.deps.json
+D:\Work\OGCSharp\OGCSharp\OGCSharp\bin\Debug\net6.0\OGCSharp.dll
+D:\Work\OGCSharp\OGCSharp\OGCSharp\bin\Debug\net6.0\OGCSharp.pdb
+D:\Work\OGCSharp\OGCSharp\OGCSharp\obj\Debug\net6.0\OGCSharp.csproj.AssemblyReference.cache
+D:\Work\OGCSharp\OGCSharp\OGCSharp\obj\Debug\net6.0\OGCSharp.GeneratedMSBuildEditorConfig.editorconfig
+D:\Work\OGCSharp\OGCSharp\OGCSharp\obj\Debug\net6.0\OGCSharp.AssemblyInfoInputs.cache
+D:\Work\OGCSharp\OGCSharp\OGCSharp\obj\Debug\net6.0\OGCSharp.AssemblyInfo.cs
+D:\Work\OGCSharp\OGCSharp\OGCSharp\obj\Debug\net6.0\OGCSharp.csproj.CoreCompileInputs.cache
+D:\Work\OGCSharp\OGCSharp\OGCSharp\obj\Debug\net6.0\OGCSharp.dll
+D:\Work\OGCSharp\OGCSharp\OGCSharp\obj\Debug\net6.0\refint\OGCSharp.dll
+D:\Work\OGCSharp\OGCSharp\OGCSharp\obj\Debug\net6.0\OGCSharp.pdb
+D:\Work\OGCSharp\OGCSharp\OGCSharp\obj\Debug\net6.0\ref\OGCSharp.dll
