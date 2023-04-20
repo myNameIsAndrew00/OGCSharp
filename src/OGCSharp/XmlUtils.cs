@@ -226,13 +226,11 @@ namespace OGCSharp
         /// <param name="xElement"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        public static double AttributeAsDouble(this XElement xElement, XName name)
+        public static double? AttributeAsDouble(this XElement xElement, XName name)
         {
-            double.TryParse(
+            return double.TryParse(
                xElement.Attribute(name)?.Value,
-               out double result);
-
-            return result;
+               out double result) ? result : null;
         }
 
         /// <summary>

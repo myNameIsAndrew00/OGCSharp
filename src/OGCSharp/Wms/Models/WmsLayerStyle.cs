@@ -1,4 +1,5 @@
 ﻿
+using GeoAPI.Geometries;
 using System.Drawing;
 using System.Xml.Linq;
 
@@ -15,6 +16,7 @@ namespace OGCSharp.Wms.Models
             Title = xmlNode.ElementUnprefixed(TitleNode)?.Value;
             Abstract = xmlNode.ElementUnprefixed(AbstractNode)?.Value;
 
+            // Try to retrieve and parse legend and stylesheet nodes because they may be missing from layer.
             var legendNode = xmlNode.ElementUnprefixed(LegendUrlNode);
             var styleSheetNode = xmlNode.ElementUnprefixed(StyleSheetURLNode);
             
@@ -58,5 +60,7 @@ namespace OGCSharp.Wms.Models
         /// Title
         /// </summary>
         public string Title { get; }
+    
+        public Envelope? LatLonBoundingBox { get; }
     }
 }

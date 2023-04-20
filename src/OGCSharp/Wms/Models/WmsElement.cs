@@ -72,7 +72,15 @@ namespace OGCSharp.Wms.Models
         public const string RemoteWFSAttributeNode = "RemoteWFS";
         public const string RemoteWCSAttributeNode = "RemoteWCS";
         public const string InlineFeatureAttributeNode = "InlineFeature";
-
+        public const string WestBoundLongitudeAttributeNode = "sm:westBoundLongitude";
+        public const string SouthBoundLongitudeAttributeNode = "sm:southBoundLatitude";
+        public const string EastBoundLongitudeAttributeNode = "sm:eastBoundLongitude";
+        public const string NorthBoundLongitudeAttributeNode = "sm:northBoundLatitude";
+        public const string XLinkHrefAttributeNode = "xlink:href";
+        public const string AddressNode = "Address";
+        public const string AddressTypeNode = "AddressType";
+        public const string MaxWidthNode = "MaxWidth";
+        public const string MaxHeightNode = "MaxHeight";
 
         protected XElement _xmlNode;
         

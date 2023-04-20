@@ -44,6 +44,20 @@ namespace OGCSharp.Wms.Models
                              ?? new List<string>();
 
             CRS = xmlNode.ElementsUnprefixed(CRSNode).Select(crsNode => crsNode.Value).ToList() ?? new List<string>();
+
+            // Try to set bounding box.
+            var boundingBoxNode = xmlNode.ElementUnprefixed(LatLonBoundingBoxNode) ?? xmlNode.ElementUnprefixed(EX_GeographicBoundingBoxNode);
+
+            if (boundingBoxNode != null)
+            {
+                LatLonBoundingBox = new Envelope(
+                    x1: boundingBoxNode.AttributeAsDouble(WestBoundLongitudeAttributeNode) ?? -180.0,
+                    x2: boundingBoxNode.AttributeAsDouble(WestBoundLongitudeAttributeNode) ?? -90.0,
+                    y1: boundingBoxNode.AttributeAsDouble(WestBoundLongitudeAttributeNode) ?? 180.0,
+                    y2: boundingBoxNode.AttributeAsDouble(WestBoundLongitudeAttributeNode) ?? 90.0);
+            }
+
+            ChildLayers = xmlNode.ElementsUnprefixed(LayerNode).Select(layerNode => new WmsServerLayer(layerNode)).ToArray();
         }
 
         /// <summary>
@@ -69,7 +83,7 @@ namespace OGCSharp.Wms.Models
         /// <summary>
         /// Latitudal/longitudal extent of this layer
         /// </summary>
-        public Envelope LatLonBoundingBox { get; }
+        public Envelope? LatLonBoundingBox { get; }
 
         /// <summary>
         /// Extent of this layer in spatial reference system

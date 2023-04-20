@@ -46,7 +46,7 @@ namespace OGCSharp.Geo.Wmts
             WmtsMapDocument capabilitiesDocument = new WmtsMapDocument(capabilitiesElement);
 
             // Create layers based on document and inner layers.
-            return capabilitiesDocument.Layers.Select(layerXelement => new WmtsLayer(capabilitiesDocument, layerXelement))
+            return capabilitiesDocument.Layers.Select(layerNode => new WmtsLayer(capabilitiesDocument, layerNode))
                                               .ToList();
         }
  
