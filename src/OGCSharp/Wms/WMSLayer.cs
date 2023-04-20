@@ -2,6 +2,7 @@
 using OGCSharp.Geo.Types;
 using OGCSharp.Wms;
 using OGCSharp.Wms.Models;
+using System.Xml.Linq;
 
 namespace OGCSharp.Geo.WMS
 {

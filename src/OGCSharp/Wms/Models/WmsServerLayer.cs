@@ -1,65 +1,100 @@
 ﻿using GeoAPI.Geometries;
+using OGCSharp.Geo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace OGCSharp.Wms.Models
 {
     /// <summary>
     /// Structure for holding information about a WMS Layer 
     /// </summary>
-    public struct WmsServerLayer
+    internal class WmsServerLayer : WmsElement
     {
+        public WmsServerLayer(XElement xmlNode) : base(xmlNode)
+        {
+            Name = xmlNode.ElementUnprefixed(NameNode).Value;
+            Title = xmlNode.ElementUnprefixed(TitleNode).Value;
+            Abstract = xmlNode.ElementUnprefixed(AbstractNode).Value;
+            Queryable = xmlNode.AttributeAsBool(QueryableAttributeNode);
+
+            SRIDBoundingBoxes = xmlNode.ElementsUnprefixed(BoundingBoxNode).Select(boundingBoxNode =>
+            {
+                int? epsg = boundingBoxNode.GetEpsg();
+
+                if (epsg.HasValue)
+                {
+                    return new WmsSpatialReferencedBoundingBox(
+                        minX: boundingBoxNode.AttributeAsInt(MinXAttributeNode),
+                        minY: boundingBoxNode.AttributeAsInt(MinYAttributeNode),
+                        maxX: boundingBoxNode.AttributeAsInt(MaxXAttributeNode),
+                        maxY: boundingBoxNode.AttributeAsInt(MaxYAttributeNode),
+                        epsg.Value);
+                }
+                else return null;
+            }).Where(boundingBox => boundingBox != null)
+              .Cast<WmsSpatialReferencedBoundingBox>()
+              .ToList();
+
+            Keywords = xmlNode.ElementUnprefixed(KeywordListNode)
+                              .ElementsUnprefixed(KeywordNode).Select(keywordNode => keywordNode.Value).ToList()
+                             ?? new List<string>();
+
+            CRS = xmlNode.ElementsUnprefixed(CRSNode).Select(crsNode => crsNode.Value).ToList() ?? new List<string>();
+        }
+
         /// <summary>
         /// Abstract
         /// </summary>
-        public string Abstract;
+        public string Abstract { get; }
 
         /// <summary>
         /// Collection of child layers
         /// </summary>
-        public WmsServerLayer[] ChildLayers;
+        public WmsServerLayer[] ChildLayers { get; }
 
         /// <summary>
         /// Coordinate Reference Systems supported by layer
         /// </summary>
-        public string[] CRS;
+        public IReadOnlyCollection<string> CRS { get; }
 
         /// <summary>
         /// Keywords
         /// </summary>
-        public string[] Keywords;
+        public IReadOnlyCollection<string> Keywords { get; }
 
         /// <summary>
         /// Latitudal/longitudal extent of this layer
         /// </summary>
-        public Envelope LatLonBoundingBox;
+        public Envelope LatLonBoundingBox { get; }
 
         /// <summary>
         /// Extent of this layer in spatial reference system
         /// </summary>
-        public List<WmsSpatialReferencedBoundingBox> SRIDBoundingBoxes;
+        public List<WmsSpatialReferencedBoundingBox> SRIDBoundingBoxes { get; }
 
         /// <summary>
         /// Unique name of this layer used for requesting layer
         /// </summary>
-        public string Name;
+        public string Name { get; }
 
         /// <summary>
         /// Specifies whether this layer is queryable using GetFeatureInfo requests
         /// </summary>
-        public bool Queryable;
+        public bool Queryable { get; }
 
         /// <summary>
         /// List of styles supported by layer
         /// </summary>
-        public WmsLayerStyle[] Style;
+        public WmsLayerStyle[] Style { get; }
 
         /// <summary>
         /// Layer title
         /// </summary>
-        public string Title;
+        public string Title { get; }
+
     }
 }

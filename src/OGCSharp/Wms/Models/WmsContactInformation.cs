@@ -14,7 +14,7 @@ namespace OGCSharp.Wms.Models
         /// <summary>
         /// Address
         /// </summary>
-        public ContactAddress Address;
+        public WmsContactAddress Address;
 
         /// <summary>
         /// Email address
@@ -29,7 +29,7 @@ namespace OGCSharp.Wms.Models
         /// <summary>
         /// Primary contact person
         /// </summary>
-        public ContactPerson PersonPrimary;
+        public WmsContactPerson PersonPrimary;
 
         /// <summary>
         /// Position of contact person
@@ -40,65 +40,5 @@ namespace OGCSharp.Wms.Models
         /// Telephone
         /// </summary>
         public string VoiceTelephone;
-
-        #region Nested type: ContactAddress
-
-        /// <summary>
-        /// Information about a contact address for the service.
-        /// </summary>
-        public struct ContactAddress
-        {
-            /// <summary>
-            /// Contact address
-            /// </summary>
-            public string Address;
-
-            /// <summary>
-            /// Type of address (usually "postal").
-            /// </summary>
-            public string AddressType;
-
-            /// <summary>
-            /// Contact City
-            /// </summary>
-            public string City;
-
-            /// <summary>
-            /// Country of contact address
-            /// </summary>
-            public string Country;
-
-            /// <summary>
-            /// Zipcode of contact
-            /// </summary>
-            public string PostCode;
-
-            /// <summary>
-            /// State or province of contact
-            /// </summary>
-            public string StateOrProvince;
-        }
-
-        #endregion
-
-        #region Nested type: ContactPerson
-
-        /// <summary>
-        /// Information about a contact person for the service.
-        /// </summary>
-        public struct ContactPerson
-        {
-            /// <summary>
-            /// Organisation of primary person
-            /// </summary>
-            public string Organisation;
-
-            /// <summary>
-            /// Primary contact person
-            /// </summary>
-            public string Person;
-        }
-
-        #endregion
     }
 }

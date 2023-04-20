@@ -9,19 +9,19 @@ namespace OGCSharp.Geo.Wmts
         {
         }
 
-        public string Identifier => this.xmlNode.ElementUnprefixed(IdentifierElement).Value;
+        public string Identifier => this._xmlNode.ElementUnprefixed(IdentifierElement).Value;
 
-        public string ScaleDenominator => this.xmlNode.ElementUnprefixed(ScaleDenominatorElement).Value;
+        public string ScaleDenominator => this._xmlNode.ElementUnprefixed(ScaleDenominatorElement).Value;
 
-        public string TopLeftCorner => this.xmlNode.ElementUnprefixed(TopLeftCornerElement).Value;
+        public string TopLeftCorner => this._xmlNode.ElementUnprefixed(TopLeftCornerElement).Value;
 
-        public int TileHeight => Convert.ToInt32(this.xmlNode.ElementUnprefixed(TileHeightElement).Value);
+        public int TileHeight => Convert.ToInt32(this._xmlNode.ElementUnprefixed(TileHeightElement).Value);
 
-        public int TileWidth => Convert.ToInt32(this.xmlNode.ElementUnprefixed(TileWidthElement).Value);
+        public int TileWidth => Convert.ToInt32(this._xmlNode.ElementUnprefixed(TileWidthElement).Value);
 
-        public int MatrixWidth => Convert.ToInt32(this.xmlNode.ElementUnprefixed(MatrixWidthElement).Value);
+        public int MatrixWidth => Convert.ToInt32(this._xmlNode.ElementUnprefixed(MatrixWidthElement).Value);
 
-        public int MatrixHeight => Convert.ToInt32(this.xmlNode.ElementUnprefixed(MatrixHeightElement).Value);
+        public int MatrixHeight => Convert.ToInt32(this._xmlNode.ElementUnprefixed(MatrixHeightElement).Value);
 
     }
 

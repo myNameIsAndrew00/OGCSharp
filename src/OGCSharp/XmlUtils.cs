@@ -185,5 +185,88 @@ namespace OGCSharp
 
             return null;
         }
+
+
+
+        /// <summary>
+        /// Get the value of the xml attribute as an integer
+        /// </summary>
+        /// <param name="xElement"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static int AttributeAsInt(this XElement xElement, XName name)
+        {
+            int.TryParse(
+               xElement.Attribute(name)?.Value,
+               out int result);
+
+            return result;
+        }
+
+
+        /// <summary>
+        /// Get the value of the xml attribute as a bool
+        /// </summary>
+        /// <param name="xElement"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static bool AttributeAsBool(this XElement xElement, XName name)
+        {
+            bool.TryParse(
+               xElement.Attribute(name)?.Value,
+               out bool result);
+
+            return result;
+        }
+
+
+        /// <summary>
+        /// Get the value of the xml attribute as a double
+        /// </summary>
+        /// <param name="xElement"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static double AttributeAsDouble(this XElement xElement, XName name)
+        {
+            double.TryParse(
+               xElement.Attribute(name)?.Value,
+               out double result);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Get the value of the xml attribute as a datetime
+        /// </summary>
+        /// <param name="xElement"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static DateTime? AttributeAsDateTime(this XElement xElement, XName name)
+        {
+            if (DateTime.TryParse(
+               xElement.Attribute(name)?.Value,
+               out DateTime result))
+                return result;
+
+            return null;
+        }
+
+     
+
+        /// <summary>
+        /// Get the value of the xml attribute as a float
+        /// </summary>
+        /// <param name="xElement"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static float AttributeAsFloat(this XElement xElement, XName name)
+        {
+            float.TryParse(
+               xElement.Attribute(name)?.Value,
+               out float result);
+
+            return result;
+        }
+         
     }
 }

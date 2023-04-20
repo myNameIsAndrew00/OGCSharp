@@ -15,20 +15,20 @@ namespace OGCSharp.Geo.Wmts
 
         public WmtsLayerNode(XElement layerXml) : base(layerXml)
         {
-            this.tileMatrixSetLinkFacade = new WmtsTileMatrixSetLink(this.xmlNode.ElementUnprefixed(TileMatrixSetLinkElement));
+            this.tileMatrixSetLinkFacade = new WmtsTileMatrixSetLink(this._xmlNode.ElementUnprefixed(TileMatrixSetLinkElement));
         }
 
-        public List<XElement> Dimensions => this.xmlNode.ElementsUnprefixed(DimensionNode).ToList();
+        public List<XElement> Dimensions => this._xmlNode.ElementsUnprefixed(DimensionNode).ToList();
 
-        public XElement Title => this.xmlNode.ElementUnprefixed(TitleElement);
+        public string Title => this._xmlNode.ElementUnprefixed(TitleElement)?.Value;
 
-        public XElement Identifier => this.xmlNode.ElementUnprefixed(IdentifierElement);
+        public string Identifier => this._xmlNode.ElementUnprefixed(IdentifierElement)?.Value;
 
         public WmtsTileMatrixSetLink TileMatrixSetLink => this.tileMatrixSetLinkFacade;
 
-        public List<XElement> Styles => this.xmlNode.ElementsUnprefixed(StyleElement).ToList();
+        public List<XElement> Styles => this._xmlNode.ElementsUnprefixed(StyleElement).ToList();
 
-        public List<XElement> ResourceUrls => this.xmlNode.ElementsUnprefixed(ResourceURLElement).ToList();
+        public List<XElement> ResourceUrls => this._xmlNode.ElementsUnprefixed(ResourceURLElement).ToList();
 
     }
 

@@ -9,12 +9,12 @@ namespace OGCSharp.Geo.Wmts
 
         public WmtsTileMatrixSetLink(XElement tileMatrixSetXml) : base(tileMatrixSetXml)
         {
-            limits = this.xmlNode.ElementUnprefixed(TileMatrixSetLimitsElement)
+            limits = this._xmlNode.ElementUnprefixed(TileMatrixSetLimitsElement)
                                  ?.ElementsUnprefixed(TileMatrixLimitsElement)
                                  .Select(element => new WmtsTileMatrixLimit(element));
         }
 
-        public string TileMatrixSet => this.xmlNode.ElementUnprefixed(TileMatrixSetElement)?.Value;
+        public string TileMatrixSet => this._xmlNode.ElementUnprefixed(TileMatrixSetElement)?.Value;
 
         public IEnumerable<WmtsTileMatrixLimit> TileMatrixLimits => limits;
 

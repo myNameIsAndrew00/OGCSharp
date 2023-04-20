@@ -3,14 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace OGCSharp.Wms.Models
 {
     /// <summary>
     /// The Wms Service Description stores metadata parameters for a WMS service
     /// </summary>
-    public struct WmsServiceDescription
+    internal class WmsService : WmsElement
     {
+        public WmsService(XElement xmlNode) : base(xmlNode)
+        {
+        }
+
         /// <summary>
         /// Optional narrative description providing additional information
         /// </summary>
@@ -71,37 +76,6 @@ namespace OGCSharp.Wms.Models
         /// Public url to access the service in case service is hosted behind firewall
         /// </summary>
         public string PublicAccessURL;
-
-
-        /// <summary>
-        /// Initializes a WmsServiceDescription object
-        /// </summary>
-        /// <param name="title">Mandatory Human-readable title for pick lists</param>
-        /// <param name="onlineResource">Top-level web address of service or service provider.</param>
-        public WmsServiceDescription(string title, string onlineResource)
-            : this(title, onlineResource, null)
-        {
-        }
-
-        /// <summary>
-        /// Initializes a WmsServiceDescription object
-        /// </summary>
-        /// <param name="title">Mandatory Human-readable title for pick lists</param>
-        /// <param name="onlineResource">Top-level web address of service or service provider.</param>
-        /// <param name="publicWMSAccessUrl">Public URL to use when accessing the service in case it is hosted behind a firewall</param>
-        public WmsServiceDescription(string title, string onlineResource, string publicWMSAccessUrl)
-        {
-            Title = title;
-            OnlineResource = onlineResource;
-            Keywords = new string[0];
-            Abstract = "";
-            ContactInformation = new WmsContactInformation();
-            Fees = "";
-            AccessConstraints = "";
-            LayerLimit = 0;
-            MaxWidth = 0;
-            MaxHeight = 0;
-            PublicAccessURL = publicWMSAccessUrl;
-        }
+ 
     }
 }

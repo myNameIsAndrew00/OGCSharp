@@ -11,9 +11,9 @@ namespace OGCSharp.Geo.Wmts
 
         public WmtsTileMatrixSet(XElement tileMatrixXml) : base(tileMatrixXml)
         {
-            this.tileMatrixes = this.xmlNode.ElementsUnprefixed(TileMatrixElement).Select(element => new WmtsTileMatrix(element));
-            this.identifier = this.xmlNode.ElementUnprefixed(IdentifierElement)?.Value;
-            this.supportedCrs = this.xmlNode.ElementUnprefixed(SupportedCRSElement)?.Value;
+            this.tileMatrixes = this._xmlNode.ElementsUnprefixed(TileMatrixElement).Select(element => new WmtsTileMatrix(element));
+            this.identifier = this._xmlNode.ElementUnprefixed(IdentifierElement)?.Value;
+            this.supportedCrs = this._xmlNode.ElementUnprefixed(SupportedCRSElement)?.Value;
         }
 
         public string Identifier => identifier;

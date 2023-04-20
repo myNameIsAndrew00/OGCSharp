@@ -14,7 +14,7 @@ namespace OGCSharp.Geo.Wmts
 
         public WmtsOperationMetadata(XElement xmlNode) : base(xmlNode)
         {
-            IEnumerable<XElement>? getTileNodes = this.xmlNode
+            IEnumerable<XElement>? getTileNodes = this._xmlNode
                 .ElementsUnprefixed(OperationNode).Where(element => element.Attributes().Where(attribute => attribute.Name.LocalName == "name"
                                                                         && attribute.Value == "GetTile").Count() > 0).FirstOrDefault()?
                 .ElementUnprefixed(DcpNode)

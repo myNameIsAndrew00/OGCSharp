@@ -9,12 +9,12 @@ namespace OGCSharp.Geo.Wmts
         {            
         }
 
-        public string TileMatrix => this.xmlNode.ElementUnprefixed(TileMatrixElement)?.Value;
+        public string TileMatrix => this._xmlNode.ElementUnprefixed(TileMatrixElement)?.Value;
 
-        public int MinTileRow => Convert.ToInt32(this.xmlNode.ElementUnprefixed(MinTileRowElement)?.Value ?? "0");
-        public int MaxTileRow => Convert.ToInt32(this.xmlNode.ElementUnprefixed(MaxTileRowElement)?.Value ?? "0");
-        public int MinTileCol => Convert.ToInt32(this.xmlNode.ElementUnprefixed(MinTileColElement)?.Value ?? "0");
-        public int MaxTileCol => Convert.ToInt32(this.xmlNode.ElementUnprefixed(MaxTileColElement)?.Value ?? "0");
+        public int MinTileRow => Convert.ToInt32(this._xmlNode.ElementUnprefixed(MinTileRowElement)?.Value ?? "0");
+        public int MaxTileRow => Convert.ToInt32(this._xmlNode.ElementUnprefixed(MaxTileRowElement)?.Value ?? "0");
+        public int MinTileCol => Convert.ToInt32(this._xmlNode.ElementUnprefixed(MinTileColElement)?.Value ?? "0");
+        public int MaxTileCol => Convert.ToInt32(this._xmlNode.ElementUnprefixed(MaxTileColElement)?.Value ?? "0");
 
     }
 }

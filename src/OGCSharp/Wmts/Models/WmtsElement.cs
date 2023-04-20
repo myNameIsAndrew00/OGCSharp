@@ -47,10 +47,10 @@ namespace OGCSharp.Geo.Wmts
 
 
 
-        protected XElement xmlNode;
+        protected XElement _xmlNode;
         public WmtsElement(XElement xmlNode)
         {
-            this.xmlNode = xmlNode;
+            this._xmlNode = xmlNode;
         }
     }
 

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,18 +7,18 @@ using System.Threading.Tasks;
 namespace OGCSharp.Wms.Models
 {
     /// <summary>
-    /// Structure for storing WMS Legend information
+    /// Information about a contact person for the service.
     /// </summary>
-    public struct WmsStyleLegend
+    public struct WmsContactPerson
     {
         /// <summary>
-        /// Online resource for legend style 
+        /// Organisation of primary person
         /// </summary>
-        public WmsOnlineResource OnlineResource;
+        public string Organisation;
 
         /// <summary>
-        /// Size of legend
+        /// Primary contact person
         /// </summary>
-        public Size Size;
+        public string Person;
     }
 }
