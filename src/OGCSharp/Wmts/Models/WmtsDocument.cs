@@ -7,7 +7,7 @@ namespace OGCSharp.Geo.Wmts
     /// <summary>
     /// Representsa a facade for an xelement which represents a wmpts map capabilities document
     /// </summary>
-    internal class WmtsMapDocument : WmtsElement
+    internal class WmtsDocument : WmtsElement
     {
         private IEnumerable<WmtsTileMatrixSet> _tileMatrixSets;
 
@@ -15,7 +15,7 @@ namespace OGCSharp.Geo.Wmts
 
         private WmtsOperationMetadata _operationMetadata;
 
-        public WmtsMapDocument(XElement documentXml) : base(documentXml)
+        public WmtsDocument(XElement documentXml) : base(documentXml)
         {
             _tileMatrixSets = this._xmlNode.ElementUnprefixed(ContentsElement)
                             .ElementsUnprefixed(TileMatrixSetElement)

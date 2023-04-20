@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33502.453
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OGCSharp", "OGCSharp\OGCSharp.csproj", "{060528A6-DEAE-4F32-A2DC-86A188EA9BA0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OGCSharp", "OGCSharp\OGCSharp.csproj", "{060528A6-DEAE-4F32-A2DC-86A188EA9BA0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OGCSharp.Tests", "OGCSharp.Tests\OGCSharp.Tests.csproj", "{F69CD502-D997-4A15-B780-768D56E24E98}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{060528A6-DEAE-4F32-A2DC-86A188EA9BA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{060528A6-DEAE-4F32-A2DC-86A188EA9BA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{060528A6-DEAE-4F32-A2DC-86A188EA9BA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F69CD502-D997-4A15-B780-768D56E24E98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F69CD502-D997-4A15-B780-768D56E24E98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F69CD502-D997-4A15-B780-768D56E24E98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F69CD502-D997-4A15-B780-768D56E24E98}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

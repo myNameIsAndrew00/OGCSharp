@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 using System.Xml.Linq;
+using System.Xml.XPath;
 
 namespace OGCSharp
 {
@@ -249,7 +252,7 @@ namespace OGCSharp
             return null;
         }
 
-     
+
 
         /// <summary>
         /// Get the value of the xml attribute as a float
@@ -265,6 +268,18 @@ namespace OGCSharp
 
             return result;
         }
-         
+
+
+        public static XElement? ToXElement(this XmlDocument xmlDocument)
+        {
+            if (xmlDocument is null)
+            {
+                return null;
+            }
+
+            XDocument document = XDocument.Load(xmlDocument.CreateNavigator().ReadSubtree());
+
+            return document.Root;
+        }
     }
 }

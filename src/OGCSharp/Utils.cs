@@ -3,10 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
+
 
 namespace OGCSharp.Geo
 {
@@ -74,14 +76,14 @@ namespace OGCSharp.Geo
         /// <param name="bbox"></param>
         /// <returns></returns>
         public static int? GetEpsg(this XElement bbox)
-        { 
+        {
             // Retrieve the attribute which contains epsg information.
             XAttribute? epsgNode = ((bbox.Attribute("srs") ?? bbox.Attribute("crs")) ?? bbox.Attribute("SRS")) ?? bbox.Attribute("CRS");
 
-            if(epsgNode == null)
+            if (epsgNode == null)
             {
                 return null;
-            } 
+            }
 
             // Try to parse epsg string to decimal representation and return.
             const string prefix = "EPSG:";
@@ -94,9 +96,24 @@ namespace OGCSharp.Geo
                 return null;
             }
 
-            return Int32.TryParse(epsgString.Substring(index + prefix.Length), out int epsg) 
+            return Int32.TryParse(epsgString.Substring(index + prefix.Length), out int epsg)
                 ? epsg : null;
         }
 
+        public static string AppendQueryString(this string uri, params (string Key, string Value)[] query)
+        {
+            StringBuilder sb = new StringBuilder(uri);
+
+            // If uri doesnt contain any '?' then it must be append to the end of it.
+            if (!uri.Contains("?"))
+            {
+                sb.Append("?");
+            }
+
+            // Append query parameters and return result.
+            sb.Append(string.Join('&', query.Select(pair => $"{pair.Key}={pair.Value}")));
+
+            return sb.ToString();
+        }
     }
 }

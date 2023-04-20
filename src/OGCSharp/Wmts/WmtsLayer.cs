@@ -16,7 +16,7 @@ namespace OGCSharp.Geo.Wmts
         /// </summary>
         /// <param name="documentNode"></param>
         /// <param name="layerNode"></param>
-        internal WmtsLayer(WmtsMapDocument documentNode, WmtsLayerNode layerNode)
+        internal WmtsLayer(WmtsDocument documentNode, WmtsLayerNode layerNode)
         {
             Init(documentNode, layerNode);
         }
@@ -32,7 +32,7 @@ namespace OGCSharp.Geo.Wmts
         public OgcServerType ServerType => OgcServerType.WMTS;
 
 
-        private void Init(WmtsMapDocument documentNode, WmtsLayerNode layerNode)
+        private void Init(WmtsDocument documentNode, WmtsLayerNode layerNode)
         {
             layerNode.Dimensions.ForEach(dimensionXml =>
             {

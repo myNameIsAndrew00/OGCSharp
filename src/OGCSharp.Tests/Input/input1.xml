@@ -1,0 +1,387 @@
+<?xml version='1.0' encoding="UTF-8" standalone="no" ?>
+<WMS_Capabilities version="1.3.0"  xmlns="http://www.opengis.net/wms"   xmlns:sld="http://www.opengis.net/sld"   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"   xmlns:ms="http://mapserver.gis.umn.edu/mapserver"   xsi:schemaLocation="http://www.opengis.net/wms http://schemas.opengis.net/wms/1.3.0/capabilities_1_3_0.xsd  http://www.opengis.net/sld http://schemas.opengis.net/sld/1.1.0/sld_capabilities.xsd  http://mapserver.gis.umn.edu/mapserver https://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv?service=WMS&amp;version=1.3.0&amp;request=GetSchemaExtension">
+
+<!-- MapServer version 7.6.4 OUTPUT=PNG OUTPUT=JPEG OUTPUT=KML SUPPORTS=PROJ SUPPORTS=AGG SUPPORTS=FREETYPE SUPPORTS=CAIRO SUPPORTS=SVG_SYMBOLS SUPPORTS=SVGCAIRO SUPPORTS=ICONV SUPPORTS=XMP SUPPORTS=FRIBIDI SUPPORTS=WMS_SERVER SUPPORTS=WMS_CLIENT SUPPORTS=WFS_SERVER SUPPORTS=WFS_CLIENT SUPPORTS=WCS_SERVER SUPPORTS=SOS_SERVER SUPPORTS=FASTCGI SUPPORTS=GEOS SUPPORTS=POINT_Z_M SUPPORTS=PBF INPUT=JPEG INPUT=POSTGIS INPUT=OGR INPUT=GDAL INPUT=SHAPEFILE -->
+
+<Service>
+  <Name>WMS</Name>
+  <Title>WMS for the GEBCO global bathymetric grid</Title>
+  <Abstract>The General Bathymetric Chart of the Oceans (GEBCO) consists of an international group of experts who work on the development of a range of bathymetric data sets and products. GEBCO operates under the joint auspices of the International Hydrographic Organization (IHO) and the Intergovernmental Oceanographic Commission (IOC) of UNESCO. See our web site for more information about GEBCO: https://www.gebco.net/.
+
+This Web Map Service (WMS) provides access to data from GEBCO&#39;s latest bathymetric grid in the form of imagery for use in your applications. GEBCO&#39;s latest global grid is GEBCO_2022 and is a global elevation model at 15 arc-second intervals. Further information about the data sets included in the grid can be found in the documentation that accompanies the data set and is available from https://www.gebco.net/data_and_products/gridded_bathymetry_data/. The GEBCO Grid is produced through the framework of the Nippon Foundation-GEBCO Seabed 2030 Project https://seabed2030.org.
+
+This service provides access to the latest GEBCO grid (GEBCO_2022) in the form of a flat image layer &#39;GEBCO_LATEST_2&#39; and as a shaded relief image layer, &#39;GEBCO_LATEST&#39;. Layer &#39;GEBCO_LATEST_3&#39; shows those pixels that are based on measured data (largely ship-track data). Areas based on interpolation are set to transparent. The layer &#39;GEBCO_LATEST_SUB_ICE_TOPO&#39; provides shaded relief imagery for a version of the GEBCO_2022 Grid that includes under-ice topography/bathymetry information for Greenland and Antarctica. 
+
+The GEBCO Grid is accompanied by a Source Data Type Identifier (TID) grid - this indicates the type of data that the corresponding cells in the GEBCO grid are based on.
+
+Information on how to download the GEBCO&#39;s grids can be found at https://www.gebco.net/data_and_products/gridded_bathymetry_data/.
+
+Please note that GEBCO&#39;s grids are mainly deeper water data sets and do not contain detailed bathymetry in shallower water areas. This WMS has been developed by the British Oceanographic Data Centre (BODC) on behalf of GEBCO.
+
+If imagery from this WMS is included in web sites, reports and digital and printed imagery then we request that the source of the dataset is acknowledged and be of the form &#39;Imagery reproduced from the GEBCO_2022 Grid, www.gebco.net&#39;.
+
+Please note that it is intended that when a new version of the GEBCO grid is released then the &#39;LATEST&#39; layers will be updated to use this new data set. This change should be transparent to the user of the WMS. Advanced notice will be given before this change takes place. Previous versions of the WMS layers are available from GEBCO&#39;s web site.</Abstract>
+  <KeywordList>
+      <Keyword>Bathymetry</Keyword>
+      <Keyword>Grid</Keyword>
+      <Keyword>GEBCO</Keyword>
+      <Keyword>seafloor</Keyword>
+      <Keyword>imagery</Keyword>
+  </KeywordList>
+  <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv?"/>
+  <ContactInformation>
+    <ContactPersonPrimary>
+      <ContactPerson>Pauline Weatherall</ContactPerson>
+      <ContactOrganization>British Oceanographic Data Centre (BODC)</ContactOrganization>
+    </ContactPersonPrimary>
+      <ContactPosition>GEBCO Digital Atlas Manager</ContactPosition>
+    <ContactAddress>
+        <AddressType>Postal</AddressType>
+        <Address>Joseph Proudman Building, 6 Brownlow Street</Address>
+        <City>Liverpool</City>
+        <StateOrProvince>Merseyside</StateOrProvince>
+        <PostCode>L3 5DA</PostCode>
+        <Country>UK</Country>
+    </ContactAddress>
+      <ContactVoiceTelephone>+44 (0)151 795 4800</ContactVoiceTelephone>
+      <ContactFacsimileTelephone>+44 (0)151 795 4912</ContactFacsimileTelephone>
+  </ContactInformation>
+  <AccessConstraints>Imagery from this WMS is not to be used for navigation or any purpose relating to safety at sea. Although every effort has been made to make sure that the imagery is as error free as possible, the British Oceanographic Data Centre (BODC) and the General Bathymetric Chart of the Oceans (GEBCO) give no warranty as to the quality or completeness of the imagery or to the non-interruption or continuation of the service.</AccessConstraints>
+  <MaxWidth>4096</MaxWidth>
+  <MaxHeight>4096</MaxHeight>
+</Service>
+
+<Capability>
+  <Request>
+    <GetCapabilities>
+      <Format>text/xml</Format>
+      <DCPType>
+        <HTTP>
+          <Get><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv?"/></Get>
+          <Post><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv?"/></Post>
+        </HTTP>
+      </DCPType>
+    </GetCapabilities>
+    <GetMap>
+      <Format>image/png</Format>
+      <Format>image/jpeg</Format>
+      <Format>image/gif</Format>
+      <Format>image/svg+xml</Format>
+      <Format>application/x-pdf</Format>
+      <Format>image/tiff</Format>
+      <Format>image/png; mode=8bit</Format>
+      <Format>image/vnd.jpeg-png</Format>
+      <Format>image/vnd.jpeg-png8</Format>
+      <Format>application/vnd.google-earth.kml+xml</Format>
+      <Format>application/vnd.google-earth.kmz</Format>
+      <Format>application/x-protobuf</Format>
+      <Format>application/json</Format>
+      <DCPType>
+        <HTTP>
+          <Get><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv?"/></Get>
+          <Post><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv?"/></Post>
+        </HTTP>
+      </DCPType>
+    </GetMap>
+    <GetFeatureInfo>
+      <Format>text/html</Format>
+      <Format>application/vnd.ogc.gml</Format>
+      <Format>text/plain</Format>
+      <DCPType>
+        <HTTP>
+          <Get><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv?"/></Get>
+          <Post><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv?"/></Post>
+        </HTTP>
+      </DCPType>
+    </GetFeatureInfo>
+    <sld:DescribeLayer>
+      <Format>text/xml</Format>
+      <DCPType>
+        <HTTP>
+          <Get><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv?"/></Get>
+          <Post><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv?"/></Post>
+        </HTTP>
+      </DCPType>
+    </sld:DescribeLayer>
+    <sld:GetLegendGraphic>
+      <Format>image/png; mode=8bit</Format>
+      <Format>image/png</Format>
+      <Format>image/vnd.jpeg-png</Format>
+      <Format>image/vnd.jpeg-png8</Format>
+      <DCPType>
+        <HTTP>
+          <Get><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv?"/></Get>
+          <Post><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv?"/></Post>
+        </HTTP>
+      </DCPType>
+    </sld:GetLegendGraphic>
+    <ms:GetStyles>
+      <Format>text/xml</Format>
+      <DCPType>
+        <HTTP>
+          <Get><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv?"/></Get>
+          <Post><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv?"/></Post>
+        </HTTP>
+      </DCPType>
+    </ms:GetStyles>
+  </Request>
+  <Exception>
+    <Format>XML</Format>
+    <Format>INIMAGE</Format>
+    <Format>BLANK</Format>
+  </Exception>
+  <sld:UserDefinedSymbolization SupportSLD="1" UserLayer="0" UserStyle="1" RemoteWFS="0" InlineFeature="0" RemoteWCS="0"/>
+  <Layer queryable="1">
+    <Name>GEBCO_Grid</Name>
+    <Title>WMS for the GEBCO global bathymetric grid</Title>
+    <Abstract>The General Bathymetric Chart of the Oceans (GEBCO) consists of an international group of experts who work on the development of a range of bathymetric data sets and products. GEBCO operates under the joint auspices of the International Hydrographic Organization (IHO) and the Intergovernmental Oceanographic Commission (IOC) of UNESCO. See our web site for more information about GEBCO: https://www.gebco.net/.
+
+This Web Map Service (WMS) provides access to data from GEBCO&#39;s latest bathymetric grid in the form of imagery for use in your applications. GEBCO&#39;s latest global grid is GEBCO_2022 and is a global elevation model at 15 arc-second intervals. Further information about the data sets included in the grid can be found in the documentation that accompanies the data set and is available from https://www.gebco.net/data_and_products/gridded_bathymetry_data/. The GEBCO Grid is produced through the framework of the Nippon Foundation-GEBCO Seabed 2030 Project https://seabed2030.org.
+
+This service provides access to the latest GEBCO grid (GEBCO_2022) in the form of a flat image layer &#39;GEBCO_LATEST_2&#39; and as a shaded relief image layer, &#39;GEBCO_LATEST&#39;. Layer &#39;GEBCO_LATEST_3&#39; shows those pixels that are based on measured data (largely ship-track data). Areas based on interpolation are set to transparent. The layer &#39;GEBCO_LATEST_SUB_ICE_TOPO&#39; provides shaded relief imagery for a version of the GEBCO_2022 Grid that includes under-ice topography/bathymetry information for Greenland and Antarctica. 
+
+The GEBCO Grid is accompanied by a Source Data Type Identifier (TID) grid - this indicates the type of data that the corresponding cells in the GEBCO grid are based on.
+
+Information on how to download the GEBCO&#39;s grids can be found at https://www.gebco.net/data_and_products/gridded_bathymetry_data/.
+
+Please note that GEBCO&#39;s grids are mainly deeper water data sets and do not contain detailed bathymetry in shallower water areas. This WMS has been developed by the British Oceanographic Data Centre (BODC) on behalf of GEBCO.
+
+If imagery from this WMS is included in web sites, reports and digital and printed imagery then we request that the source of the dataset is acknowledged and be of the form &#39;Imagery reproduced from the GEBCO_2022 Grid, www.gebco.net&#39;.
+
+Please note that it is intended that when a new version of the GEBCO grid is released then the &#39;LATEST&#39; layers will be updated to use this new data set. This change should be transparent to the user of the WMS. Advanced notice will be given before this change takes place. Previous versions of the WMS layers are available from GEBCO&#39;s web site.</Abstract>
+    <KeywordList>
+        <Keyword>Bathymetry</Keyword>
+        <Keyword>Grid</Keyword>
+        <Keyword>GEBCO</Keyword>
+        <Keyword>seafloor</Keyword>
+        <Keyword>imagery</Keyword>
+    </KeywordList>
+    <CRS>EPSG:4326</CRS>
+    <CRS>EPSG:3395</CRS>
+    <CRS>EPSG:3857</CRS>
+    <EX_GeographicBoundingBox>
+        <westBoundLongitude>-180</westBoundLongitude>
+        <eastBoundLongitude>360</eastBoundLongitude>
+        <southBoundLatitude>-90</southBoundLatitude>
+        <northBoundLatitude>90</northBoundLatitude>
+    </EX_GeographicBoundingBox>
+    <Attribution>
+        <Title>General Bathymetric Chart of the Oceans (GEBCO)</Title>
+        <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="https://www.gebco.net/"/>
+    </Attribution>
+    <Layer>
+      <Name>GEBCO_LATEST_SUB_ICE_TOPO</Name>
+      <Title>GEBCO Grid - including sub ice topography - shaded relief</Title>
+      <Abstract>GEBCO_LATEST_SUB_ICE_TOPO</Abstract>
+    <Style>
+       <Name>default</Name>
+       <Title>default</Title>
+       <LegendURL width="35" height="5">
+          <Format>image/png</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv?version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=GEBCO_LATEST_SUB_ICE_TOPO&amp;format=image/png&amp;STYLE=default"/>
+       </LegendURL>
+    </Style>
+      <Layer queryable="0" opaque="0" cascaded="0">
+        <Name>GEBCO_LATEST_SUB_ICE_TOPO</Name>
+        <Title>GEBCO_LATEST_SUB_ICE_TOPO</Title>
+        <Abstract>This layer provides shaded relief imagery for a version of the GEBCO_2022 Grid that includes under-ice topography/bathymetry information for areas around Greenland and Antarctica.</Abstract>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-180</westBoundLongitude>
+            <eastBoundLongitude>360</eastBoundLongitude>
+            <southBoundLatitude>-90</southBoundLatitude>
+            <northBoundLatitude>90</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv?request=GetMetadata&amp;layer=GEBCO_LATEST_SUB_ICE_TOPO"/>
+        </MetadataURL>
+        <Style>
+          <Name>GEBCO_2022_legend</Name>
+          <Title>GEBCO_2022_legend</Title>
+          <LegendURL width="5297" height="1126">
+             <Format>image/jpeg</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.gebco.net/data_and_products/gebco_web_services/web_map_service/images/gebco_depth_colour_key_vertical.jpg"/>
+          </LegendURL>
+        </Style>
+        <MaxScaleDenominator>1e+07</MaxScaleDenominator>
+      </Layer>
+    </Layer>
+    <Layer>
+      <Name>GEBCO_LATEST</Name>
+      <Title>GEBCO Grid shaded relief</Title>
+      <Abstract>GEBCO_LATEST</Abstract>
+    <Style>
+       <Name>default</Name>
+       <Title>default</Title>
+       <LegendURL width="35" height="5">
+          <Format>image/png</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv?version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=GEBCO_LATEST&amp;format=image/png&amp;STYLE=default"/>
+       </LegendURL>
+    </Style>
+      <Layer queryable="0" opaque="0" cascaded="0">
+        <Name>GEBCO_LATEST</Name>
+        <Title>GEBCO_LATEST</Title>
+        <Abstract>The GEBCO_2022 Grid is a global grid of elevation data at 15 arc-second intervals. This layer displays the GEBCO_2022 Grid as a shaded relief image showing the shape of the global seafloor. The imagery extends from -180 to 360 in longitude. Please note that the GEBCO_2022, is also available as 2D, flat image in layer. Ice cover information for areas north of Antartica is based on the GLIMS data base: Raup, B.H.; A. Racoviteanu; S.J.S. Khalsa; C. Helm; R. Armstrong; Y. Arnaud (2007). &#39;The GLIMS Geospatial Glacier Database: a New Tool for Studying Glacier Change&#39;.  Global and Planetary Change  (doi:10.1016/j.gloplacha.2006.07.018). For snow/ice regions around Greenland IceBridge BedMachine Greenland, Version 4 was used: Morlighem, M. et al. 2021, updated 2021. IceBridge BedMachine Greenland, Version 4. [Mask layer, flag values 2, 3 and 4]. Boulder, Colorado USA. NASA National Snow and Ice Data Center Distributed Active Archive Center. doi: https://doi.org/10.5067/VLJ5YXKCNGXO. [14th July 2022]. For the area around Antarctica land/ice extent is produced using data from the SCAR Antarctic Digital Database V7.5: https://www.add.scar.org/</Abstract>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-180</westBoundLongitude>
+            <eastBoundLongitude>360</eastBoundLongitude>
+            <southBoundLatitude>-90</southBoundLatitude>
+            <northBoundLatitude>90</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv?request=GetMetadata&amp;layer=GEBCO_LATEST"/>
+        </MetadataURL>
+        <Style>
+          <Name>GEBCO_2022_legend</Name>
+          <Title>GEBCO_2022_legend</Title>
+          <LegendURL width="5297" height="1126">
+             <Format>image/jpeg</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.gebco.net/data_and_products/gebco_web_services/web_map_service/images/gebco_depth_colour_key_vertical.jpg"/>
+          </LegendURL>
+        </Style>
+        <MaxScaleDenominator>1e+07</MaxScaleDenominator>
+      </Layer>
+    </Layer>
+    <Layer queryable="1">
+      <Name>GEBCO_LATEST_2_sub_ice_topo</Name>
+      <Title>GEBCO Grid colour-shaded for elevation including under ice topography</Title>
+      <Abstract>GEBCO_LATEST_2_sub_ice_topo</Abstract>
+    <Style>
+       <Name>default</Name>
+       <Title>default</Title>
+       <LegendURL width="35" height="5">
+          <Format>image/png</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv?version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=GEBCO_LATEST_2_sub_ice_topo&amp;format=image/png&amp;STYLE=default"/>
+       </LegendURL>
+    </Style>
+      <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>GEBCO_LATEST_2_sub_ice_topo</Name>
+        <Title>GEBCO_LATEST_2_sub_ice_topo</Title>
+        <Abstract>The GEBCO_2022 Grid is a global grid of elevation data at 15 arc-second intervals.
+This layers displays the GEBCO_2022 Grid as an image colour-shaded for elevation and includes under ice topography/bathymetry information for areas around Greenland and Antarctica.</Abstract>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-180</westBoundLongitude>
+            <eastBoundLongitude>360</eastBoundLongitude>
+            <southBoundLatitude>-90</southBoundLatitude>
+            <northBoundLatitude>90</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv?request=GetMetadata&amp;layer=GEBCO_LATEST_2_sub_ice_topo"/>
+        </MetadataURL>
+        <Style>
+          <Name>GEBCO_2022_Grid_layer_2_legend</Name>
+          <Title>GEBCO_2022_Grid_layer_2_legend</Title>
+          <LegendURL width="5297" height="1126">
+             <Format>image/jpeg</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.gebco.net/data_and_products/gebco_web_services/web_map_service/images/gebco_depth_colour_key_vertical.jpg"/>
+          </LegendURL>
+        </Style>
+        <MaxScaleDenominator>4e+07</MaxScaleDenominator>
+      </Layer>
+    </Layer>
+    <Layer queryable="1">
+      <Name>GEBCO_LATEST_2</Name>
+      <Title>GEBCO Grid colour-shaded for elevation</Title>
+      <Abstract>GEBCO_LATEST_2</Abstract>
+    <Style>
+       <Name>default</Name>
+       <Title>default</Title>
+       <LegendURL width="35" height="5">
+          <Format>image/png</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv?version=1.3.0&amp;service=WMS&amp;request=GetLegendGraphic&amp;sld_version=1.1.0&amp;layer=GEBCO_LATEST_2&amp;format=image/png&amp;STYLE=default"/>
+       </LegendURL>
+    </Style>
+      <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>GEBCO_LATEST_2</Name>
+        <Title>GEBCO_LATEST_2</Title>
+        <Abstract>The GEBCO_2022 Grid is a global grid of elevation data at 15 arc-second intervals.
+This layers displays the GEBCO_2022 Grid as an image colour-shaded for elevation.</Abstract>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-180</westBoundLongitude>
+            <eastBoundLongitude>360</eastBoundLongitude>
+            <southBoundLatitude>-90</southBoundLatitude>
+            <northBoundLatitude>90</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv?request=GetMetadata&amp;layer=GEBCO_LATEST_2"/>
+        </MetadataURL>
+        <Style>
+          <Name>GEBCO_2022_Grid_layer_2_legend</Name>
+          <Title>GEBCO_2022_Grid_layer_2_legend</Title>
+          <LegendURL width="5297" height="1126">
+             <Format>image/jpeg</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.gebco.net/data_and_products/gebco_web_services/web_map_service/images/gebco_depth_colour_key_vertical.jpg"/>
+          </LegendURL>
+        </Style>
+        <MaxScaleDenominator>4e+07</MaxScaleDenominator>
+      </Layer>
+    </Layer>
+    <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>GEBCO_LATEST_3</Name>
+        <Title>GEBCO_LATEST_3</Title>
+        <Abstract>The GEBCO_2022 Grid is a global grid of elevation data at 15 arc-second intervals.
+It is GEBCO&#39;s latest global bathymetric model. This layers displays grid cells from the GEBCO_2022 Grid that are based on measured data, colour shaded for depth. Those grid cells that are based on interpolation methods are transparent. This helps to highlight the regions that have yet to be mapped. Further details about the development of the GEBCO_2022 Grid can be found in the accompanying documentation.</Abstract>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-180</westBoundLongitude>
+            <eastBoundLongitude>360</eastBoundLongitude>
+            <southBoundLatitude>-90</southBoundLatitude>
+            <northBoundLatitude>90</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv?request=GetMetadata&amp;layer=GEBCO_LATEST_3"/>
+        </MetadataURL>
+        <Style>
+          <Name>GEBCO_2022_Grid_layer_3_legend</Name>
+          <Title>GEBCO_2022_Grid_layer_3_legend</Title>
+          <LegendURL width="5297" height="1126">
+             <Format>image/jpeg</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.gebco.net/data_and_products/gebco_web_services/web_map_service/images/gebco_depth_colour_key_vertical.jpg"/>
+          </LegendURL>
+        </Style>
+    </Layer>
+    <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>GEBCO_LATEST_TID_2</Name>
+        <Title>GEBCO_LATEST TID 2 Grid</Title>
+        <Abstract>Imagery based on the GEBCO_2022 Source Data Type Identifier (TID) Grid. This TID layer identifies grid cells based on measured data or those based on interpolation. This layer displays the GEBCO_2022 TID grid colour coded for TID value.</Abstract>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-180</westBoundLongitude>
+            <eastBoundLongitude>360</eastBoundLongitude>
+            <southBoundLatitude>-90</southBoundLatitude>
+            <northBoundLatitude>90</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv?request=GetMetadata&amp;layer=GEBCO_LATEST_TID_2"/>
+        </MetadataURL>
+        <Style>
+          <Name>GEBCO_2022_Grid_TID_layer_2_legend</Name>
+          <Title>GEBCO_2022_Grid_TID_layer_2_legend</Title>
+          <LegendURL width="5297" height="1126">
+             <Format>image/jpeg</Format>
+             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.gebco.net/data_and_products/gebco_web_services/web_map_service/images/gebco_tid_legend.jpg"/>
+          </LegendURL>
+        </Style>
+    </Layer>
+    <Layer queryable="1" opaque="0" cascaded="0">
+        <Name>GEBCO_LATEST_TID</Name>
+        <Title>GEBCO_LATEST TID Grid</Title>
+        <Abstract>Imagery based on the GEBCO_2022 Source Data Type Identifier (TID) Grid. This TID layer identifies grid cells based on measured data or those based on interpolation or pre-generated grids. Those grid cells based on measured data (TID codes 10 - 17 and 44 are shown in black, all other TID codes are shown as transparent. A full list of TID codes and their defintions is given in the documentation that accompanies the data set and on GEBCO&#39;s web site.
+         Please note that this is a change to previous colour-coding of the TID grid. For previous releases, TID codes, 42,43,70,71 and 72 where as black, they are now shown as transparent.</Abstract>
+        <EX_GeographicBoundingBox>
+            <westBoundLongitude>-180</westBoundLongitude>
+            <eastBoundLongitude>360</eastBoundLongitude>
+            <southBoundLatitude>-90</southBoundLatitude>
+            <northBoundLatitude>90</northBoundLatitude>
+        </EX_GeographicBoundingBox>
+        <MetadataURL type="TC211">
+          <Format>text/xml</Format>
+          <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="https://www.gebco.net/data_and_products/gebco_web_services/web_map_service/mapserv?request=GetMetadata&amp;layer=GEBCO_LATEST_TID"/>
+        </MetadataURL>
+    </Layer>
+  </Layer>
+</Capability>
+</WMS_Capabilities>

@@ -2,6 +2,7 @@
 using OGCSharp.Geo.WMS;
 using OGCSharp.Geo.Wmts;
 using Microsoft.Extensions.DependencyInjection;
+using OGCSharp.Abstractions;
 
 namespace OGCSharp.Geo.Extensions
 {
@@ -15,12 +16,11 @@ namespace OGCSharp.Geo.Extensions
         /// </summary>
         /// <param name="serviceDescriptors"></param>
         /// <returns></returns>
-        public static IServiceCollection AddGeo(this IServiceCollection serviceDescriptors)
+        public static IServiceCollection AddOgc(this IServiceCollection serviceDescriptors)
         {
             // Add capabilities parsers to services.
             return serviceDescriptors
-                .AddScoped<IOgcCapabilitiesParser, WmtsCapabilitiesParser>()
-                .AddScoped<IOgcCapabilitiesParser, WmsCapabilitiesParser>();
+                .AddScoped<IOgcCapabilitiesParsersFactory, OgcCapabilitiesParsersFactory>();
         }
  
     }

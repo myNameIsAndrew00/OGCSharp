@@ -8,5 +8,10 @@ namespace OGCSharp.Wms
 {
     internal class WmsOptions
     {
+        public string? ReferencedLayerName { get; set; }
+
+        public string? Abstract { get; set; }  
+
+        public bool Queryable { get; set; } 
     }
 }

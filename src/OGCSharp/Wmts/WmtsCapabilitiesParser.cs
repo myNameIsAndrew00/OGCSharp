@@ -19,17 +19,7 @@ namespace OGCSharp.Geo.Wmts
         public async Task<IReadOnlyCollection<ILayer>?> GetLayersAsync(string url) => ParseCapabilitiesInternal(await Utils.DownloadCapabilitesAsync(url))?.Cast<ILayer>().ToList();
         
 
-        public async Task<IReadOnlyCollection<ILayer>?> GetLayersAsync(XmlDocument xmlDocument)
-        {
-            if (xmlDocument is null)
-            {
-                return null;
-            }
-
-            XDocument document = XDocument.Load(xmlDocument.CreateNavigator().ReadSubtree());
-
-            return ParseCapabilitiesInternal(document.Root)?.Cast<ILayer>().ToList();
-        }
+        public async Task<IReadOnlyCollection<ILayer>?> GetLayersAsync(XmlDocument xmlDocument) => ParseCapabilitiesInternal(xmlDocument.ToXElement())?.Cast<ILayer>().ToList();
 
 
         #region Private
@@ -43,7 +33,7 @@ namespace OGCSharp.Geo.Wmts
             }
 
             // Parse the capabilities document from XElement node. 
-            WmtsMapDocument capabilitiesDocument = new WmtsMapDocument(capabilitiesElement);
+            WmtsDocument capabilitiesDocument = new WmtsDocument(capabilitiesElement);
 
             // Create layers based on document and inner layers.
             return capabilitiesDocument.Layers.Select(layerNode => new WmtsLayer(capabilitiesDocument, layerNode))
