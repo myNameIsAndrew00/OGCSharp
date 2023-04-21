@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OGCSharp.Wms;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -13,8 +14,9 @@ namespace OGCSharp
     /// <summary>
     /// Contains extension methods for XElement
     /// </summary>
-    public static class XmlUtils
+    internal static class XmlUtils
     {
+        [Obsolete("Avoid using this work around to obtain elements when namespace is wrong")]
         /// <summary>
         /// Get the first (in document order) child element with the specified unprefixed name. This function will not intepret namespace as part of name.
         /// </summary>
@@ -26,6 +28,7 @@ namespace OGCSharp
             return xElement.Elements().Where(element => element.Name.LocalName == unprefixedName)?.FirstOrDefault();
         }
 
+        [Obsolete("Avoid using this work around to obtain elements when namespace is wrong")]
         /// <summary>
         /// Returns a collection of the child elements of this element or document which have the unprefixed name.
         /// </summary>
@@ -42,29 +45,15 @@ namespace OGCSharp
         /// <param name="xElement"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        public static int ValueAsInt(this XElement xElement, XName name)
+        public static int ValueAsInt(this XElement xElement, string name, WmsParsingContext parsingContext)
         {
             int.TryParse(
-               xElement.Element(name)?.Value,
+               xElement.Element(parsingContext.ParsingNamespace + name)?.Value,
                out int result);
 
             return result;
         }
 
-        /// <summary>
-        /// Get the value of the xml element as an integer
-        /// </summary>
-        /// <param name="xElement"></param>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        public static int ValueAsIntUnprefixed(this XElement xElement, string name)
-        {
-            int.TryParse(
-               xElement.ElementUnprefixed(name)?.Value,
-               out int result);
-
-            return result;
-        }
 
         /// <summary>
         /// Get the value of the xml element as a bool
@@ -72,29 +61,15 @@ namespace OGCSharp
         /// <param name="xElement"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        public static bool ValueAsBool(this XElement xElement, XName name)
+        public static bool ValueAsBool(this XElement xElement, string name, WmsParsingContext parsingContext)
         {
             bool.TryParse(
-               xElement.Element(name)?.Value,
+               xElement.Element(parsingContext.ParsingNamespace + name)?.Value,
                out bool result);
 
             return result;
         }
 
-        /// <summary>
-        /// Get the value of the xml element as a bool
-        /// </summary>
-        /// <param name="xElement"></param>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        public static bool ValueAsBoolUnprefixed(this XElement xElement, string name)
-        {
-            bool.TryParse(
-               xElement.ElementUnprefixed(name)?.Value,
-               out bool result);
-
-            return result;
-        }
 
         /// <summary>
         /// Get the value of the xml element as a double
@@ -102,10 +77,10 @@ namespace OGCSharp
         /// <param name="xElement"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        public static double ValueAsDouble(this XElement xElement, XName name)
+        public static double ValueAsDouble(this XElement xElement, string name, WmsParsingContext parsingContext)
         {
             double.TryParse(
-               xElement.Element(name)?.Value,
+               xElement.Element(parsingContext.ParsingNamespace + name)?.Value,
                out double result);
 
             return result;
@@ -117,30 +92,17 @@ namespace OGCSharp
         /// <param name="xElement"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        public static DateTime? ValueAsDateTime(this XElement xElement, XName name)
+        public static DateTime? ValueAsDateTime(this XElement xElement, string name, WmsParsingContext parsingContext)
         {
             if (DateTime.TryParse(
-               xElement.Element(name)?.Value,
+               xElement.Element(parsingContext.ParsingNamespace + name)?.Value,
                out DateTime result))
                 return result;
 
             return null;
         }
 
-        /// <summary>
-        /// Get the value of the xml element as a double
-        /// </summary>
-        /// <param name="xElement"></param>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        public static double ValueAsDoubleUnprefixed(this XElement xElement, string name)
-        {
-            double.TryParse(
-               xElement.ElementUnprefixed(name)?.Value,
-               out double result);
 
-            return result;
-        }
 
         /// <summary>
         /// Get the value of the xml element as a float
@@ -148,47 +110,18 @@ namespace OGCSharp
         /// <param name="xElement"></param>
         /// <param name="name"></param>
         /// <returns></returns>
-        public static float ValueAsFloat(this XElement xElement, XName name)
+        public static float ValueAsFloat(this XElement xElement, string name, WmsParsingContext parsingContext)
         {
             float.TryParse(
-               xElement.Element(name)?.Value,
-               out float result);
-
-            return result;
-        }
-
-        /// <summary>
-        /// Get the value of the xml element as a float
-        /// </summary>
-        /// <param name="xElement"></param>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        public static float ValueAsFloatUnprefixed(this XElement xElement, string name)
-        {
-            float.TryParse(
-               xElement.ElementUnprefixed(name)?.Value,
+               xElement.Element(parsingContext.ParsingNamespace + name)?.Value,
                out float result);
 
             return result;
         }
 
 
-        /// <summary>
-        /// Get the value of the xml element as a datetime
-        /// </summary>
-        /// <param name="xElement"></param>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        public static DateTime? ValueAsDateTimeUnprefixed(this XElement xElement, string name)
-        {
-            if (DateTime.TryParse(
-               xElement.ElementUnprefixed(name)?.Value,
-               out DateTime result))
-                return result;
-
-            return null;
-        }
-
+        public static int AttributeAsInt(this XElement xElement, string name, WmsParsingContext parsingContext)
+             => AttributeAsInt(xElement, parsingContext.ParsingNamespace + name);
 
 
         /// <summary>
@@ -206,6 +139,8 @@ namespace OGCSharp
             return result;
         }
 
+        public static bool AttributeAsBool(this XElement xElement, string name, WmsParsingContext parsingContext)
+            => AttributeAsBool(xElement, parsingContext.ParsingNamespace + name);
 
         /// <summary>
         /// Get the value of the xml attribute as a bool
@@ -222,6 +157,8 @@ namespace OGCSharp
             return result;
         }
 
+        public static double? AttributeAsDouble(this XElement xElement, string name, WmsParsingContext parsingContext)
+          => AttributeAsDouble(xElement, parsingContext.ParsingNamespace + name);
 
         /// <summary>
         /// Get the value of the xml attribute as a double
@@ -235,6 +172,10 @@ namespace OGCSharp
                xElement.Attribute(name)?.Value,
                out double result) ? result : null;
         }
+
+        public static DateTime? AttributeAsDateTime(this XElement xElement, string name, WmsParsingContext parsingContext)
+        => AttributeAsDateTime(xElement, parsingContext.ParsingNamespace + name);
+
 
         /// <summary>
         /// Get the value of the xml attribute as a datetime
@@ -252,6 +193,8 @@ namespace OGCSharp
             return null;
         }
 
+        public static float AttributeAsFloat(this XElement xElement, string name, WmsParsingContext parsingContext)
+             => AttributeAsFloat(xElement, parsingContext.ParsingNamespace + name);
 
 
         /// <summary>
@@ -281,5 +224,16 @@ namespace OGCSharp
 
             return document.Root;
         }
+
+
+        public static XElement? GetWmsElement(this XElement node, string name, WmsParsingContext parsingContext)
+         => node.Element(parsingContext.ParsingNamespace + name);
+
+        public static IEnumerable<XElement> GetWmsElements(this XElement node, string name, WmsParsingContext parsingContext)
+         => node.Elements(parsingContext.ParsingNamespace + name);
+
+
+        public static XAttribute? GetXLinkAttribute(this XElement node, string name)
+        => node.Attribute(WmsConstants.XLink + name);
     }
 }

@@ -1,6 +1,7 @@
 ﻿
 using GeoAPI.Geometries;
 using System.Drawing;
+using System.Xml;
 using System.Xml.Linq;
 
 namespace OGCSharp.Wms.Models
@@ -10,19 +11,22 @@ namespace OGCSharp.Wms.Models
     /// </summary>
     internal class WmsLayerStyle : WmsElement
     {
-        public WmsLayerStyle(XElement xmlNode) : base(xmlNode)
+        internal override void Parse(XElement node, WmsParsingContext parsingContext)
         {
-            Name = xmlNode.ElementUnprefixed(NameNode)?.Value;
-            Title = xmlNode.ElementUnprefixed(TitleNode)?.Value;
-            Abstract = xmlNode.ElementUnprefixed(AbstractNode)?.Value;
+            // According to 7.2.4.6.5, a style must have a title and a name, abstract and other inner elements are optional.
+            Name = node.GetWmsElement(NameNode, parsingContext)!.Value;
+            Title = node.GetWmsElement(NameNode, parsingContext)!.Value;
+            Abstract = node.GetWmsElement(NameNode, parsingContext)?.Value;
 
             // Try to retrieve and parse legend and stylesheet nodes because they may be missing from layer.
-            var legendNode = xmlNode.ElementUnprefixed(LegendUrlNode);
-            var styleSheetNode = xmlNode.ElementUnprefixed(StyleSheetURLNode);
-            
+            var legendNode = node.GetWmsElement(LegendUrlNode, parsingContext);
+            var styleSheetNode = node.GetWmsElement(StyleSheetURLNode, parsingContext);
+
             if (legendNode != null)
             {
-                LegendUrl = new WmsOnlineResource(legendNode, false);
+                LegendUrl = new WmsOnlineResource(false);
+                LegendUrl.Parse(legendNode, parsingContext);
+
                 LegendSize = new Size(
                     legendNode.AttributeAsInt(WidthAttributeNode),
                     legendNode.AttributeAsInt(HeightAttributeNode)
@@ -30,37 +34,40 @@ namespace OGCSharp.Wms.Models
             }
             if (styleSheetNode != null)
             {
-                StyleSheetUrl = new WmsOnlineResource(styleSheetNode, false);
+                StyleSheetUrl = new WmsOnlineResource(false);
+                StyleSheetUrl.Parse(styleSheetNode, parsingContext);
             }
         }
 
         /// <summary>
         /// Abstract
         /// </summary>
-        public string Abstract { get; }
+        public string? Abstract { get; internal set; }
 
         /// <summary>
         /// Legend
         /// </summary>
-        public WmsOnlineResource? LegendUrl { get; }
+        public WmsOnlineResource? LegendUrl { get; internal set; }
 
-        public Size? LegendSize { get; }
+        public Size? LegendSize { get; internal set; }
 
         /// <summary>
         /// Name
         /// </summary>
-        public string Name { get; }
+        public string Name { get; internal set; } = null!;
 
         /// <summary>
         /// Style Sheet Url
         /// </summary>
-        public WmsOnlineResource? StyleSheetUrl { get; }
+        public WmsOnlineResource? StyleSheetUrl { get; internal set; }
 
         /// <summary>
         /// Title
         /// </summary>
-        public string Title { get; }
+        public string Title { get; internal set; } = null!;
     
-        public Envelope? LatLonBoundingBox { get; }
+        public Envelope? LatLonBoundingBox { get; internal set; }
+
+       
     }
 }

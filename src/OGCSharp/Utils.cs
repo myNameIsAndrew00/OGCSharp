@@ -1,4 +1,5 @@
-﻿using OGCSharp.Wms.Models;
+﻿using OGCSharp.Wms;
+using OGCSharp.Wms.Models;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -55,16 +56,22 @@ namespace OGCSharp.Geo
         /// </summary>
         /// <param name="node"></param>
         /// <returns></returns>
-        public static (IReadOnlyCollection<string> OutputFormats, IReadOnlyCollection<WmsOnlineResource> OnlineResources) ParseRequestTypeBlock(this XElement node)
+        public static (IReadOnlyCollection<string> OutputFormats, IReadOnlyCollection<WmsOnlineResource> OnlineResources) ParseRequestTypeBlock(this XElement node, WmsParsingContext parsingContext)
         {
-            XElement? dctType = node.ElementUnprefixed(WmsElement.DCPTypeNode)
-                                   ?.ElementUnprefixed(WmsElement.HTTPNode);
+            XElement? dctType = node.GetWmsElement(WmsElement.DCPTypeNode, parsingContext)
+                                   ?.GetWmsElement(WmsElement.HTTPNode, parsingContext);
 
             // Retrieve online resources under http node.
-            var onlineResources = dctType?.Elements().Select(xElement => new WmsOnlineResource(xElement)).ToList() ?? new List<WmsOnlineResource>();
+            var onlineResources = dctType?.Elements().Select(xElement =>
+            {
+                var resource = new WmsOnlineResource();
+                resource.Parse(xElement, parsingContext);
+
+                return resource;
+            }).ToList() ?? new List<WmsOnlineResource>();
 
             // Retrieve output formats (format node).
-            var outputFormats = node.ElementsUnprefixed(WmsElement.FormatNode).Select(xElement => xElement.Value).ToList() ?? new List<string>();
+            var outputFormats = node.GetWmsElements(WmsElement.FormatNode, parsingContext).Select(xElement => xElement.Value).ToList() ?? new List<string>();
 
             return (outputFormats, onlineResources);
         }

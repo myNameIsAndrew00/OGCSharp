@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 using System.Xml.Linq;
 
 namespace OGCSharp.Wms.Models
@@ -12,22 +13,22 @@ namespace OGCSharp.Wms.Models
     /// </summary>
     internal class WmsContactPerson : WmsElement
     {
-        public WmsContactPerson(XElement xmlNode) : base(xmlNode)
+        internal override void Parse(XElement node, WmsParsingContext parsingContext)
         {
-            Organisation = xmlNode.ElementUnprefixed(ContactOrganizationNode)?.Value;
-            Person = xmlNode.ElementUnprefixed(ContactPersonNode)?.Value;
+            Organisation = node.GetWmsElement(ContactOrganizationNode, parsingContext)?.Value;
+            Person = node.GetWmsElement(ContactPersonNode, parsingContext)?.Value;
         }
 
         /// <summary>
         /// Organisation of primary person
         /// </summary>
-        public string Organisation;
+        public string? Organisation { get; internal set; }
 
         /// <summary>
         /// Primary contact person
         /// </summary>
-        public string Person;
+        public string? Person { get; internal set; }
 
-     
+      
     }
 }

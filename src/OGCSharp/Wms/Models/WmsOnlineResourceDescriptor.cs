@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 using System.Xml.Linq;
 
 namespace OGCSharp.Wms.Models
@@ -13,17 +14,20 @@ namespace OGCSharp.Wms.Models
     /// </summary>
     internal class WmsOnlineResourceDescriptor : WmsElement
     {
-        public WmsOnlineResourceDescriptor(XElement xmlNode) : base(xmlNode)
+        internal override void Parse(XElement node, WmsParsingContext parsingContext)
         {
-            var nodeContent = xmlNode.ParseRequestTypeBlock();
+            var nodeContent = node.ParseRequestTypeBlock(parsingContext);
 
             OutputFormats = nodeContent.OutputFormats;
             OnlineResources = nodeContent.OnlineResources;
         }
-    
-        public IReadOnlyCollection<string> OutputFormats { get; }
 
-        public IReadOnlyCollection<WmsOnlineResource> OnlineResources { get; }
+       
     
+        public IReadOnlyCollection<string> OutputFormats { get; internal set; }
+
+        public IReadOnlyCollection<WmsOnlineResource> OnlineResources { get; internal set; }
+
+      
     }
 }

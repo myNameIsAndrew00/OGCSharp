@@ -1,4 +1,5 @@
 ﻿
+using System.Xml;
 using System.Xml.Linq;
 
 namespace OGCSharp.Wms.Models
@@ -8,31 +9,40 @@ namespace OGCSharp.Wms.Models
     /// </summary>
     internal class WmsOnlineResource : WmsElement
     {
-        public WmsOnlineResource(XElement xmlNode, bool selfContained = true) : base(xmlNode)
+        private bool _selfContained;
+
+        public WmsOnlineResource(bool selfContained = true)
+        {
+            _selfContained = selfContained;
+          
+        }
+        internal override void Parse(XElement node, WmsParsingContext parsingContext)
         {
             // If element in selfcontained, then url is the first child.
-            if (selfContained)
+            if (_selfContained)
             {
-                HttpMethod = xmlNode.Name.LocalName;
-                Url = xmlNode.Elements()?.FirstOrDefault()?.Attribute("xlink:href")?.Value;
+                HttpMethod = node.Name.LocalName;
+                Url = node.Elements()?.FirstOrDefault()?.GetXLinkAttribute(HrefAttributeNode)?.Value;
             }
             else
             {
-                Format = xmlNode.ElementUnprefixed(OnlineResourceNode)?.Attribute($"xlink:{HrefAttributeNode}")?.Value;
-                Format = xmlNode.ElementUnprefixed(FormatNode)?.Value;
+                Format = node.GetWmsElement(OnlineResourceNode, parsingContext)?.GetXLinkAttribute(HrefAttributeNode)?.Value;
+                Format = node.GetWmsElement(FormatNode, parsingContext)?.Value;
             }
         }
 
         /// <summary>
         /// URI of online resource
         /// </summary>
-        public string? Url { get; }
+        public string? Url { get; internal set; }
 
         /// <summary>
         /// Type of online resource (Ex. request method 'Get' or 'Post')
         /// </summary>
-        public string? HttpMethod { get; }
+        public string? HttpMethod { get; internal set; }
 
-        public string? Format { get; }
+        public string? Format { get; internal set; }
+
+     
     }
 }

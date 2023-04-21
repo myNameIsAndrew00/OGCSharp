@@ -7,7 +7,7 @@ using System.Xml.Linq;
 
 namespace OGCSharp.Wms.Models
 {
-    internal class WmsElement
+    internal abstract class WmsElement
     {
         public const string ServiceNode = "Service";
         public const string CapabilityNode = "Capability";
@@ -66,28 +66,43 @@ namespace OGCSharp.Wms.Models
         public const string WidthAttributeNode = "width";
         public const string HeightAttributeNode = "height";
         public const string QueryableAttributeNode = "queryable";
+        public const string CascadedAttributeNode = "cascaded";
+        public const string OpaqueAttributeNode = "opaque";
+        public const string NoSubsetsAttributeNode = "noSubsets";
+        public const string FixedWidthAttributeNode = "fixedWidth";
+        public const string FixedHeightAttributeNode = "fixedHeight";
         public const string SupportSLDAttributeNode = "SupportSLD";
         public const string UserLayerAttributeNode = "UserLayer";
         public const string UserStyleAttributeNode = "UserStyle";
         public const string RemoteWFSAttributeNode = "RemoteWFS";
         public const string RemoteWCSAttributeNode = "RemoteWCS";
         public const string InlineFeatureAttributeNode = "InlineFeature";
-        public const string WestBoundLongitudeAttributeNode = "sm:westBoundLongitude";
-        public const string SouthBoundLongitudeAttributeNode = "sm:southBoundLatitude";
-        public const string EastBoundLongitudeAttributeNode = "sm:eastBoundLongitude";
-        public const string NorthBoundLongitudeAttributeNode = "sm:northBoundLatitude";
+        public const string WestBoundLongitudeAttributeNode = "westBoundLongitude";
+        public const string SouthBoundLongitudeAttributeNode = "southBoundLatitude";
+        public const string EastBoundLongitudeAttributeNode = "eastBoundLongitude";
+        public const string NorthBoundLongitudeAttributeNode = "northBoundLatitude";
+        
+        public const string NameAttributeNode = "name";
+        public const string UnitsAttributeNode = "units";
+        public const string UnitSymbolAttributeNode = "unitSymbol";
+        public const string DefaultAttributeNode = "multipleValues";
+        public const string MultipleAttributeNode = "nearestValue";
+        public const string NearestAttributeNode = "current";
+        public const string CurrentAttributeNode = "extent";
+
         public const string XLinkHrefAttributeNode = "href";
         public const string AddressNode = "Address";
         public const string AddressTypeNode = "AddressType";
         public const string MaxWidthNode = "MaxWidth";
         public const string MaxHeightNode = "MaxHeight";
+        public const string DimensionNode = "Dimension";
 
-        protected XElement _xmlNode;
-        
-        public WmsElement(XElement xmlNode)
-        {
-            this._xmlNode = xmlNode;
-        }
+        /// <summary>
+        /// Try to parse a given node into current object.
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="parsingContext"></param>
+        internal abstract void Parse(XElement node, WmsParsingContext parsingContext);
 
     }
 }

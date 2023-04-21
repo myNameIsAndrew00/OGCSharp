@@ -1,6 +1,7 @@
 ﻿using OGCSharp.Geo.Abstractions;
 using OGCSharp.Geo.Types;
 using OGCSharp.Geo.Wmts;
+using OGCSharp.Wms;
 using OGCSharp.Wms.Models;
 using System.Xml;
 using System.Xml.Linq;
@@ -28,8 +29,12 @@ namespace OGCSharp.Geo.WMS
                 return null;
             }
 
-            // Parse the capabilities document from XElement node. 
-            WmsDocument capabilitiesDocument = new WmsDocument(capabilitiesElement);
+            // Parse the capabilities document from XElement node using a new context.
+            // Context is a mechanism to share data between nodes.
+            WmsDocument capabilitiesDocument = new WmsDocument();
+            WmsParsingContext parsingContext = new WmsParsingContext();
+
+            capabilitiesDocument.Parse(capabilitiesElement, parsingContext);
 
             List<WmsLayer> layers = new List<WmsLayer>();
 
@@ -37,22 +42,27 @@ namespace OGCSharp.Geo.WMS
             ParseRecursive(
                 layer: capabilitiesDocument.Capability.LayerGroup,
                 wmsDocument: capabilitiesDocument,
+                parentLayer: null,
                 wmsLayers: ref layers);
 
             return layers;
         }
 
-        private void ParseRecursive(WmsServerLayer layer, WmsDocument wmsDocument, ref List<WmsLayer> wmsLayers)
+        private void ParseRecursive(WmsServerLayer layer, WmsDocument wmsDocument, WmsLayer? parentLayer, ref List<WmsLayer> wmsLayers)
         {
             try
             {
                 // Add layer from current level to the result list.
-                wmsLayers.Add(new WmsLayer(layer, wmsDocument));
+                var wmsLayer = new WmsLayer(layer, wmsDocument, parentLayer);
+                wmsLayers.Add(wmsLayer);
 
-                // Iterate through child layers and extract all inner layers.
-                foreach (var innerLayer in layer.ChildLayers)
+                if (layer.ChildLayers != null)
                 {
-                    ParseRecursive(innerLayer, wmsDocument, ref wmsLayers);
+                    // Iterate through child layers and extract all inner layers.
+                    foreach (var innerLayer in layer.ChildLayers)
+                    {
+                        ParseRecursive(innerLayer, wmsDocument, wmsLayer, ref wmsLayers);
+                    }
                 }
             }
             catch

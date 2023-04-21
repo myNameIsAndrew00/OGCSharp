@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 using System.Xml.Linq;
 
 namespace OGCSharp.Wms.Models
@@ -12,45 +13,46 @@ namespace OGCSharp.Wms.Models
     /// </summary>
     internal class WmsContactAddress : WmsElement
     {
-        public WmsContactAddress(XElement xmlNode) : base(xmlNode)
+    
+        internal override void Parse(XElement node, WmsParsingContext parsingContext)
         {
-            Address = xmlNode.ElementUnprefixed(AddressNode)?.Value;
-            AddressType = xmlNode.ElementUnprefixed(AddressTypeNode)?.Value;
-            City = xmlNode.ElementUnprefixed(CityNode)?.Value;
-            Country = xmlNode.ElementUnprefixed(CountryNode)?.Value;
-            PostCode = xmlNode.ElementUnprefixed(PostCodeNode)?.Value;
+            Address = node.GetWmsElement(AddressNode, parsingContext)?.Value;
+            AddressType = node.GetWmsElement(AddressTypeNode, parsingContext)?.Value;
+            City = node.GetWmsElement(CityNode, parsingContext)?.Value;
+            Country = node.GetWmsElement(CountryNode, parsingContext)?.Value;
+            PostCode = node.GetWmsElement(PostCodeNode, parsingContext)?.Value;
         }
 
         /// <summary>
         /// Contact address
         /// </summary>
-        public string Address { get; }
+        public string? Address { get; internal set; }
 
         /// <summary>
         /// Type of address (usually "postal").
         /// </summary>
-        public string AddressType { get; }
+        public string? AddressType { get; internal set; }
 
         /// <summary>
         /// Contact City
         /// </summary>
-        public string City { get; }
+        public string? City { get; internal set; }
 
         /// <summary>
         /// Country of contact address
         /// </summary>
-        public string Country { get; }
+        public string? Country { get; internal set; }
 
         /// <summary>
         /// Zipcode of contact
         /// </summary>
-        public string PostCode { get; }
+        public string? PostCode { get; internal set; }
 
         /// <summary>
         /// State or province of contact
         /// </summary>
-        public string StateOrProvince { get; }
+        public string? StateOrProvince { get; internal set; }
 
-     
+      
     }
 }
