@@ -24,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\OGCSharp.Layers\OGCSharp.Layers.csproj" />
     <ProjectReference Include="..\OGCSharp\OGCSharp.csproj" />
   </ItemGroup>
 

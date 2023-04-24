@@ -1,15 +1,9 @@
-﻿using OGCSharp.Wms;
-using OGCSharp.Wmts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using OGCSharp.Wmts;
 using System.Xml.Linq;
 
 namespace OGCSharp.Geo.Wmts
 {
-    internal abstract class WmtsElement
+    public abstract class WmtsElement
     {
         public const string OperationsMetadataNode = "OperationsMetadata";
         public const string OperationNode = "Operation";

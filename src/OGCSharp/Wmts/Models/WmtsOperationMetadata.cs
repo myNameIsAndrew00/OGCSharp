@@ -1,4 +1,4 @@
-﻿using OGCSharp;
+﻿using OGCSharp.Wms;
 using OGCSharp.Wmts;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.Xml.Linq;
 
 namespace OGCSharp.Geo.Wmts
 {
-    internal class WmtsOperationMetadata : WmtsElement
+    public class WmtsOperationMetadata : WmtsElement
     { 
         internal override void Parse(XElement node, WmtsParsingContext parsingContext)
         {
@@ -31,7 +31,7 @@ namespace OGCSharp.Geo.Wmts
             });
 
 
-            TileHref = getTileNode?.Attribute(WmtsConstants.XLinkNamespace + "href")?.Value;
+            TileHref = getTileNode?.Attribute(WmtsConstants.XLink + "href")?.Value;
             TileEncoding = getTileNode == null ? null : "KVP";
         }
 

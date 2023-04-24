@@ -5,13 +5,30 @@ namespace OGCSharp.Wms.Models
     /// <summary>
     /// This element is defined according to section 6.3 from WMS Implementation specification.
     /// </summary>
-    internal class WmsRequest : WmsElement
+    public class WmsRequest : WmsElement
     {
 
         internal override void Parse(XElement node, WmsParsingContext parsingContext)
         {
-            GetMap.Parse(node.GetWmsElement(GetMapNode, parsingContext), parsingContext);
-            GetCapabilities.Parse(node.GetWmsElement(GetCapabilitiesNode, parsingContext), parsingContext);
+            // Get map node and get capabilities node are mandatory.
+            var getMapNode = node.GetWmsElement(GetMapNode, parsingContext);
+
+            if(getMapNode == null)
+            {
+                parsingContext.ParsingErrors.Add(WmsParsingMessages.REQUEST_GETMAP_ELEM_M);
+                return;
+            }
+
+            var getCapabilitiesNode = node.GetWmsElement(GetCapabilitiesNode, parsingContext);
+
+            if(getCapabilitiesNode == null)
+            {
+                parsingContext.ParsingErrors.Add(WmsParsingMessages.REQUEST_GETCAPABILITIES_ELEM_M);
+                return;
+            }
+
+            GetMap.Parse(getMapNode, parsingContext);
+            GetCapabilities.Parse(getCapabilitiesNode, parsingContext);
 
 
             var featureInfoNode = node.GetWmsElement(GetFeatureInfoNode, parsingContext);
@@ -21,28 +38,28 @@ namespace OGCSharp.Wms.Models
                 GetFeatureInfo.Parse(featureInfoNode, parsingContext);
             }
 
-            var describeLayerNode = node.Element(WmsConstants.Sld + DescribeLayerNode);
+            var describeLayerNode = node.Element(WmsNamespaces.Sld + DescribeLayerNode);
             if (describeLayerNode != null)
             {
                 DescribeLayer = new WmsOnlineResourceDescriptor();
                 DescribeLayer.Parse(describeLayerNode, parsingContext);
             }
 
-            var legendGraphicNode = node.Element(WmsConstants.Sld + GetLegendGraphicNode);
+            var legendGraphicNode = node.Element(WmsNamespaces.Sld + GetLegendGraphicNode);
             if (legendGraphicNode != null)
             {
                 GetLegendGraphic = new WmsOnlineResourceDescriptor();
                 GetLegendGraphic.Parse(legendGraphicNode, parsingContext);
             }
 
-            var getStylesNode = node.Element(WmsConstants.MapServer + GetStylesNode);
+            var getStylesNode = node.Element(WmsNamespaces.MapServer + GetStylesNode);
             if (getStylesNode != null)
             {
                 GetStyles = new WmsOnlineResourceDescriptor();
                 GetStyles.Parse(getStylesNode, parsingContext);
             }
 
-            var putStylesNode = node.Element(WmsConstants.MapServer + PutStylesNode);
+            var putStylesNode = node.Element(WmsNamespaces.MapServer + PutStylesNode);
             if (putStylesNode != null)
             {
                 PutStyles = new WmsOnlineResourceDescriptor();

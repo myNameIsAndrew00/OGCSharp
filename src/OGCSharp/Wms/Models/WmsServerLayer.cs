@@ -7,12 +7,21 @@ namespace OGCSharp.Wms.Models
     /// <summary>
     /// Structure for holding information about a WMS Layer 
     /// </summary>
-    internal class WmsServerLayer : WmsElement
+    public class WmsServerLayer : WmsElement
     {
         internal override void Parse(XElement node, WmsParsingContext parsingContext)
         {
+            var titleNode = node.GetWmsElement(TitleNode, parsingContext);
+
+            if (titleNode == null)
+            {
+                parsingContext.ParsingErrors.Add(WmsParsingMessages.LAYER_TITLE_ELEM_M);
+                return;
+            }
+
+
+            Title = titleNode.Value;
             Name = node.GetWmsElement(NameNode, parsingContext)?.Value;
-            Title = node.GetWmsElement(TitleNode, parsingContext)!.Value;
             Abstract = node.GetWmsElement(AbstractNode, parsingContext)?.Value;
             Queryable = node.AttributeAsInt(QueryableAttributeNode) == 1;
             Opaque = node.AttributeAsInt(OpaqueAttributeNode) == 1;

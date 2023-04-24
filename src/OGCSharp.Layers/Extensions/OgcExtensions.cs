@@ -1,8 +1,6 @@
-﻿using OGCSharp.Geo.Abstractions;
-using OGCSharp.Geo.WMS;
-using OGCSharp.Geo.Wmts;
-using Microsoft.Extensions.DependencyInjection;
-using OGCSharp.Abstractions;
+﻿using Microsoft.Extensions.DependencyInjection;
+using OGCSharp.Layers;
+using OGCSharp.Layers.Abstractions;
 
 namespace OGCSharp.Geo.Extensions
 {
@@ -20,7 +18,7 @@ namespace OGCSharp.Geo.Extensions
         {
             // Add capabilities parsers to services.
             return serviceDescriptors
-                .AddScoped<IOgcCapabilitiesParsersFactory, OgcCapabilitiesParsersFactory>();
+                .AddSingleton<IOgcProvidersFactory, OgcProvidersFactory>();
         }
  
     }

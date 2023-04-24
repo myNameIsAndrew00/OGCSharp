@@ -1,10 +1,10 @@
-﻿using OGCSharp;
+﻿using OGCSharp.Wms;
 using OGCSharp.Wmts;
 using System.Xml.Linq;
 
 namespace OGCSharp.Geo.Wmts
 {
-    internal class WmtsTileMatrixLimit : WmtsElement
+    public class WmtsTileMatrixLimit : WmtsElement
     {
         internal override void Parse(XElement node, WmtsParsingContext parsingContext)
         {

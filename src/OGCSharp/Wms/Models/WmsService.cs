@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
-using System.Xml.Linq;
+﻿using System.Xml.Linq;
 
 namespace OGCSharp.Wms.Models
 {
     /// <summary>
     /// The Wms Service Description stores metadata parameters for a WMS service
     /// </summary>
-    internal class WmsService : WmsElement
+    public class WmsService : WmsElement
     {
         internal override void Parse(XElement node, WmsParsingContext parsingContext)
         {

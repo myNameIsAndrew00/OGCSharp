@@ -1,9 +1,10 @@
-﻿using OGCSharp.Wmts;
+﻿using OGCSharp.Wms;
+using OGCSharp.Wmts;
 using System.Xml.Linq;
 
 namespace OGCSharp.Geo.Wmts
 {
-    internal class WmtsTileMatrixSet : WmtsElement
+    public class WmtsTileMatrixSet : WmtsElement
     {
         private IEnumerable<WmtsTileMatrix> tileMatrixes;
         private string identifier;

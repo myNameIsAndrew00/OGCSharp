@@ -1,9 +1,4 @@
 ﻿using OGCSharp.Types;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace OGCSharp.Wms
@@ -19,8 +14,16 @@ namespace OGCSharp.Wms
         {
             WmsVersion.V1_0_0 => XNamespace.None,
             WmsVersion.V1_1_0 => XNamespace.None,
-            WmsVersion.V1_3_0 => WmsConstants.Wms130,
+            WmsVersion.V1_3_0 => WmsNamespaces.Wms130,
             _ => XNamespace.None
         };
+
+        public ICollection<string> ParsingErrors { get; } = new List<string>();
+
+        public WmsParsingResult ToParsingResult() => new WmsParsingResult()
+        {
+            ParsingErrors = ParsingErrors
+        };
+
     }
 }

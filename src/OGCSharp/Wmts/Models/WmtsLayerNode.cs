@@ -1,4 +1,4 @@
-﻿using OGCSharp;
+﻿using OGCSharp.Wms;
 using OGCSharp.Wmts;
 using OGCSharp.Wmts.Elements;
 using System;
@@ -11,7 +11,7 @@ using System.Xml.Linq;
 namespace OGCSharp.Geo.Wmts
 {
 
-    internal class WmtsLayerNode : WmtsElement
+    public class WmtsLayerNode : WmtsElement
     {
         private WmtsTileMatrixSetLink _tileMatrixSetLinkFacade;
 

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OGCSharp.Wmts.Elements
 {
-    internal class WmtsTileGrid
+    public class WmtsTileGrid
     {
         public IEnumerable<WmtsTileMatrixLimit> TileMatrixLimits { get; set; } = null!;
 

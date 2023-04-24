@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace OGCSharp.Wmts.Elements
 {
-    internal record WmtsDimension(string Dimension, string Value);
+    public record WmtsDimension(string Dimension, string Value);
 }

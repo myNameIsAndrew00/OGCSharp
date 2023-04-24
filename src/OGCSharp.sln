@@ -5,7 +5,9 @@ VisualStudioVersion = 17.5.33502.453
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OGCSharp", "OGCSharp\OGCSharp.csproj", "{060528A6-DEAE-4F32-A2DC-86A188EA9BA0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OGCSharp.Tests", "OGCSharp.Tests\OGCSharp.Tests.csproj", "{F69CD502-D997-4A15-B780-768D56E24E98}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OGCSharp.Tests", "OGCSharp.Tests\OGCSharp.Tests.csproj", "{F69CD502-D997-4A15-B780-768D56E24E98}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OGCSharp.Layers", "OGCSharp.Layers\OGCSharp.Layers.csproj", "{28CDF1B8-BA37-4746-9B7F-C5101126CCD7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{F69CD502-D997-4A15-B780-768D56E24E98}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F69CD502-D997-4A15-B780-768D56E24E98}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F69CD502-D997-4A15-B780-768D56E24E98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28CDF1B8-BA37-4746-9B7F-C5101126CCD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28CDF1B8-BA37-4746-9B7F-C5101126CCD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28CDF1B8-BA37-4746-9B7F-C5101126CCD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28CDF1B8-BA37-4746-9B7F-C5101126CCD7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

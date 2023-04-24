@@ -1,13 +1,11 @@
-﻿
-using System.Xml;
-using System.Xml.Linq;
+﻿using System.Xml.Linq;
 
 namespace OGCSharp.Wms.Models
 {
     /// <summary>
     /// Structure for storing info on an Online Resource (DCPType node data).
     /// </summary>
-    internal class WmsOnlineResource : WmsElement
+    public class WmsOnlineResource : WmsElement
     {
         private bool _selfContained;
 

@@ -4,12 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml;
 using System.Xml.Linq;
 
 namespace OGCSharp.Wms.Models
 {
-    internal class WmsDocument : WmsElement
+    public class WmsDocument : WmsElement
     {
         internal override void Parse(XElement node, WmsParsingContext parsingContext)
         {
@@ -23,8 +22,24 @@ namespace OGCSharp.Wms.Models
 
             parsingContext.Version = Version;
 
-            Service.Parse(node.GetWmsElement(ServiceNode, parsingContext)!, parsingContext);
-            Capability.Parse(node.GetWmsElement(CapabilityNode, parsingContext)!, parsingContext);
+            var serviceNode = node.GetWmsElement(ServiceNode, parsingContext);
+
+            if(serviceNode == null)
+            {
+                parsingContext.ParsingErrors.Add(WmsParsingMessages.DOCUMENT_SERVICE_ELEM_M);
+                return;
+            }
+
+            var capabilityNode = node.GetWmsElement(CapabilityNode, parsingContext);
+
+            if (capabilityNode == null)
+            {
+                parsingContext.ParsingErrors.Add(WmsParsingMessages.DOCUMENT_CAPABILITY_ELEM_M);
+                return;
+            }
+
+            Service.Parse(serviceNode, parsingContext);
+            Capability.Parse(capabilityNode, parsingContext);
         }
 
         public WmsVersion Version { get; internal set; } 

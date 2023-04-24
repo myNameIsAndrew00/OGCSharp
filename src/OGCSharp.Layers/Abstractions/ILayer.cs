@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OGCSharp.Geo.Abstractions
+namespace OGCSharp.Layers.Abstractions
 {
     /// <summary>
     /// Provides a common interface for layers consumed by a OGC service.

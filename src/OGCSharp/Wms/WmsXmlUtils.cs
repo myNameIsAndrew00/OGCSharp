@@ -1,5 +1,4 @@
-﻿using OGCSharp.Wms;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -9,36 +8,13 @@ using System.Xml;
 using System.Xml.Linq;
 using System.Xml.XPath;
 
-namespace OGCSharp
+namespace OGCSharp.Wms
 {
     /// <summary>
-    /// Contains extension methods for XElement
+    /// Contains extension methods for XElement used internaly by wms paresr. 
     /// </summary>
-    internal static class XmlUtils
+    internal static class WmsXmlUtils
     {
-        [Obsolete("Avoid using this work around to obtain elements when namespace is wrong")]
-        /// <summary>
-        /// Get the first (in document order) child element with the specified unprefixed name. This function will not intepret namespace as part of name.
-        /// </summary>
-        /// <param name="xElement"></param>
-        /// <param name="unprefixedName"></param>
-        /// <returns></returns>
-        public static XElement? ElementUnprefixed(this XElement xElement, string unprefixedName)
-        {
-            return xElement.Elements().Where(element => element.Name.LocalName == unprefixedName)?.FirstOrDefault();
-        }
-
-        [Obsolete("Avoid using this work around to obtain elements when namespace is wrong")]
-        /// <summary>
-        /// Returns a collection of the child elements of this element or document which have the unprefixed name.
-        /// </summary>
-        /// <param name="unprefixedName"></param>
-        /// <returns></returns>
-        public static IEnumerable<XElement> ElementsUnprefixed(this XElement xElement, string unprefixedName)
-        {
-            return xElement.Elements().Where(element => element.Name.LocalName == unprefixedName);
-        }
-
         /// <summary>
         /// Get the value of the xml element as an integer
         /// </summary>
@@ -120,10 +96,7 @@ namespace OGCSharp
         }
 
 
-        public static int AttributeAsInt(this XElement xElement, string name, WmsParsingContext parsingContext)
-             => AttributeAsInt(xElement, parsingContext.ParsingNamespace + name);
-
-
+    
         /// <summary>
         /// Get the value of the xml attribute as an integer
         /// </summary>
@@ -138,10 +111,7 @@ namespace OGCSharp
 
             return result;
         }
-
-        public static bool AttributeAsBool(this XElement xElement, string name, WmsParsingContext parsingContext)
-            => AttributeAsBool(xElement, parsingContext.ParsingNamespace + name);
-
+ 
         /// <summary>
         /// Get the value of the xml attribute as a bool
         /// </summary>
@@ -156,9 +126,7 @@ namespace OGCSharp
 
             return result;
         }
-
-        public static double? AttributeAsDouble(this XElement xElement, string name, WmsParsingContext parsingContext)
-          => AttributeAsDouble(xElement, parsingContext.ParsingNamespace + name);
+ 
 
         /// <summary>
         /// Get the value of the xml attribute as a double
@@ -172,11 +140,7 @@ namespace OGCSharp
                xElement.Attribute(name)?.Value,
                out double result) ? result : null;
         }
-
-        public static DateTime? AttributeAsDateTime(this XElement xElement, string name, WmsParsingContext parsingContext)
-        => AttributeAsDateTime(xElement, parsingContext.ParsingNamespace + name);
-
-
+ 
         /// <summary>
         /// Get the value of the xml attribute as a datetime
         /// </summary>
@@ -192,9 +156,6 @@ namespace OGCSharp
 
             return null;
         }
-
-        public static float AttributeAsFloat(this XElement xElement, string name, WmsParsingContext parsingContext)
-             => AttributeAsFloat(xElement, parsingContext.ParsingNamespace + name);
 
 
         /// <summary>
@@ -213,18 +174,6 @@ namespace OGCSharp
         }
 
 
-        public static XElement? ToXElement(this XmlDocument xmlDocument)
-        {
-            if (xmlDocument is null)
-            {
-                return null;
-            }
-
-            XDocument document = XDocument.Load(xmlDocument.CreateNavigator().ReadSubtree());
-
-            return document.Root;
-        }
-
 
         public static XElement? GetWmsElement(this XElement node, string name, WmsParsingContext parsingContext)
          => node.Element(parsingContext.ParsingNamespace + name);
@@ -232,8 +181,7 @@ namespace OGCSharp
         public static IEnumerable<XElement> GetWmsElements(this XElement node, string name, WmsParsingContext parsingContext)
          => node.Elements(parsingContext.ParsingNamespace + name);
 
-
         public static XAttribute? GetXLinkAttribute(this XElement node, string name)
-        => node.Attribute(WmsConstants.XLink + name);
+        => node.Attribute(WmsNamespaces.XLink + name);
     }
 }

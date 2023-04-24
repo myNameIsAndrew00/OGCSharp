@@ -1,35 +1,44 @@
-﻿using OGCSharp.Geo.WMS;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
-using System.Xml.Linq;
+﻿using System.Xml.Linq;
 
 namespace OGCSharp.Wms.Models
 {
-    internal class WmsCapability : WmsElement
+    public class WmsCapability : WmsElement
     {
 
         internal override void Parse(XElement node, WmsParsingContext parsingContext)
         {
+            var requestNode = node.GetWmsElement(RequestNode, parsingContext);
+
+            if(requestNode == null)
+            {
+                parsingContext.ParsingErrors.Add(WmsParsingMessages.CAPABILITY_REQUEST_ELEM_M);
+                return;
+            }
+
+
             // Capability element represent the actual operations that are supported by the server.
             // According to 7.2.4.4, layers, request are mandatory to be defined.
-            Request.Parse(node.GetWmsElement(RequestNode, parsingContext)!, parsingContext);
+            Request.Parse(requestNode, parsingContext);
             ExceptionsFormats = node.GetWmsElement(ExceptionNode, parsingContext)
                                     ?.GetWmsElements(FormatNode, parsingContext)
                                     ?.Select(formatNode => formatNode.Value)
                                     ?.ToList() ?? new List<string>();
 
-            var usedDefinedSymbolization = node.Element(WmsConstants.Sld + UserDefinedSymbolizationNode);
+            var usedDefinedSymbolization = node.Element(WmsNamespaces.Sld + UserDefinedSymbolizationNode);
             if (usedDefinedSymbolization != null) {
                 UserDefinedSymbolization = new WmsUserDefinedSymbolization();
 
                 UserDefinedSymbolization.Parse(usedDefinedSymbolization, parsingContext);
             }
 
-            LayerGroup.Parse(node.GetWmsElement(LayerNode, parsingContext)!, parsingContext);
+            var layerNode = node.GetWmsElement(LayerNode, parsingContext);
+            if (layerNode == null)
+            {
+                parsingContext.ParsingErrors.Add(WmsParsingMessages.CAPABILITY_LAYER_ELEM_M);
+                return;
+            }
+
+            LayerGroup.Parse(layerNode, parsingContext);
         }
 
         public WmsRequest Request { get; internal set; } = new WmsRequest();

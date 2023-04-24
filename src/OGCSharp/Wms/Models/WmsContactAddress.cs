@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
-using System.Xml.Linq;
+﻿using System.Xml.Linq;
 
 namespace OGCSharp.Wms.Models
 {
     /// <summary>
     /// Information about a contact address for the service.
     /// </summary>
-    internal class WmsContactAddress : WmsElement
+    public class WmsContactAddress : WmsElement
     {
     
         internal override void Parse(XElement node, WmsParsingContext parsingContext)

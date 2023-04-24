@@ -1,74 +1,69 @@
-﻿using OGCSharp.Geo.Abstractions;
-using OGCSharp.Geo.Types;
-using OGCSharp.Geo.Wmts;
-using OGCSharp.Wms;
+﻿using OGCSharp.Wms;
 using OGCSharp.Wms.Models;
 using System.Xml;
 using System.Xml.Linq;
-using System.Xml.XPath;
 
 namespace OGCSharp.Geo.WMS
 {
     /// <summary>
     /// This class should be used for parsing WMS Capabilities.
     /// </summary>
-    internal class WmsCapabilitiesParser : IOgcCapabilitiesParser
+    public class WmsCapabilitiesParser
     {
-        public OgcServerType Type => OgcServerType.WMS;
 
-        public async Task<IReadOnlyCollection<ILayer>?> GetLayersAsync(string url) => ParseCapabilitiesInternal(await Utils.DownloadCapabilitesAsync(url))?.Cast<ILayer>().ToList();
-
-
-        public async Task<IReadOnlyCollection<ILayer>?> GetLayersAsync(XmlDocument xmlDocument) => ParseCapabilitiesInternal(xmlDocument.ToXElement())?.Cast<ILayer>().ToList();
+        public WmsParsingResult TryParse(string xml, out WmsDocument? wmsDocument) => TryParse(XElement.Parse(xml), out wmsDocument);
 
 
-        private List<WmsLayer>? ParseCapabilitiesInternal(XElement? capabilitiesElement)
+        public WmsParsingResult TryParse(XmlDocument xmlDocument, out WmsDocument? wmsDocument) => TryParse(xmlDocument.ToXElement(), out wmsDocument);
+
+
+        private WmsParsingResult TryParse(XElement? capabilityElement, out WmsDocument? wmsDocument)
+        { 
+            var capabilitiesData = ParseCapabilitiesInternal(capabilityElement);
+
+            // Check if document was created by internal method.
+            // If not, that means an error ocurred during xml iteration. 
+            if (capabilitiesData.Document == null)
+            {
+                WmsParsingResult errorResult = capabilitiesData.ParsingContext?.ToParsingResult() ?? new WmsParsingResult() { FailedReading = true };
+
+                wmsDocument = null;
+
+                return errorResult;
+            }
+
+            wmsDocument = capabilitiesData.Document;
+
+            return capabilitiesData.ParsingContext!.ToParsingResult();
+        }
+
+
+        private (WmsDocument? Document, WmsParsingContext? ParsingContext) ParseCapabilitiesInternal(XElement? capabilitiesElement)
         {
             if (capabilitiesElement is null)
             {
-                return null;
+                return (null, null);
             }
+
+            WmsParsingContext parsingContext = new WmsParsingContext();
+            WmsDocument capabilitiesDocument = new WmsDocument();
 
             // Parse the capabilities document from XElement node using a new context.
             // Context is a mechanism to share data between nodes.
-            WmsDocument capabilitiesDocument = new WmsDocument();
-            WmsParsingContext parsingContext = new WmsParsingContext();
-
-            capabilitiesDocument.Parse(capabilitiesElement, parsingContext);
-
-            List<WmsLayer> layers = new List<WmsLayer>();
-
-            // Create layers based on document and inner layers.
-            ParseRecursive(
-                layer: capabilitiesDocument.Capability.LayerGroup,
-                wmsDocument: capabilitiesDocument,
-                parentLayer: null,
-                wmsLayers: ref layers);
-
-            return layers;
-        }
-
-        private void ParseRecursive(WmsServerLayer layer, WmsDocument wmsDocument, WmsLayer? parentLayer, ref List<WmsLayer> wmsLayers)
-        {
             try
             {
-                // Add layer from current level to the result list.
-                var wmsLayer = new WmsLayer(layer, wmsDocument, parentLayer);
-                wmsLayers.Add(wmsLayer);
+                capabilitiesDocument.Parse(capabilitiesElement, parsingContext);
 
-                if (layer.ChildLayers != null)
-                {
-                    // Iterate through child layers and extract all inner layers.
-                    foreach (var innerLayer in layer.ChildLayers)
-                    {
-                        ParseRecursive(innerLayer, wmsDocument, wmsLayer, ref wmsLayers);
-                    }
-                }
+
+                return (capabilitiesDocument, parsingContext);
             }
             catch
             {
+                return (null, parsingContext);
             }
         }
+
+
 
     }
 }

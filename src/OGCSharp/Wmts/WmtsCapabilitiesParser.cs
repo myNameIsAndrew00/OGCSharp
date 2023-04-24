@@ -1,32 +1,40 @@
-﻿using OGCSharp.Geo.Abstractions;
-using OGCSharp.Geo.Types;
-using OGCSharp;
-using OGCSharp.Wmts.Elements;
-using System.Xml;
+﻿using System.Xml;
 using System.Xml.Linq;
+using OGCSharp.Wms;
+using OGCSharp.Wms.Models;
 using OGCSharp.Wmts;
 
 namespace OGCSharp.Geo.Wmts
 {
-    internal class WmtsCapabilitiesParser : IOgcCapabilitiesParser
+    public class WmtsCapabilitiesParser
     {
+           
+        public bool TryParse(string xml, out WmtsDocument? document) => TryParseInternal(XElement.Parse(xml), out document);
 
-        public OgcServerType Type => OgcServerType.WMTS;
 
-        public WmtsCapabilitiesParser()
+        public bool TryParse(XmlDocument xmlDocument, out WmtsDocument? document) => TryParseInternal(xmlDocument.ToXElement(), out document);
+
+
+        private bool TryParseInternal(XElement? capabilityElement, out WmtsDocument? document)
         {
+            document = null;
+
+            try
+            {
+                document = ParseCapabilitiesInternal(capabilityElement);
+
+                return document != null;
+            }
+            catch
+            {
+                return false;
+            }
         }
-
-        public async Task<IReadOnlyCollection<ILayer>?> GetLayersAsync(string url) => ParseCapabilitiesInternal(await Utils.DownloadCapabilitesAsync(url))?.Cast<ILayer>().ToList();
-        
-
-        public async Task<IReadOnlyCollection<ILayer>?> GetLayersAsync(XmlDocument xmlDocument) => ParseCapabilitiesInternal(xmlDocument.ToXElement())?.Cast<ILayer>().ToList();
-
 
         #region Private
 
 
-        private List<WmtsLayer>? ParseCapabilitiesInternal(XElement? capabilitiesElement)
+        private WmtsDocument? ParseCapabilitiesInternal(XElement? capabilitiesElement)
         {
             if (capabilitiesElement is null)
             {
@@ -39,11 +47,9 @@ namespace OGCSharp.Geo.Wmts
 
             capabilitiesDocument.Parse(capabilitiesElement, parsingContext);
 
-            // Create layers based on document and inner layers.
-            return capabilitiesDocument.Layers.Select(layerNode => new WmtsLayer(capabilitiesDocument, layerNode))
-                                              .ToList();
+            return capabilitiesDocument;
         }
- 
+
 
         #endregion
     }

@@ -1,10 +1,10 @@
-﻿using OGCSharp;
+﻿using OGCSharp.Wms;
 using OGCSharp.Wmts;
 using System.Xml.Linq;
 
 namespace OGCSharp.Geo.Wmts
 {
-    internal class WmtsTileMatrixSetLink : WmtsElement
+    public class WmtsTileMatrixSetLink : WmtsElement
     {
         private IEnumerable<WmtsTileMatrixLimit> limits;
 

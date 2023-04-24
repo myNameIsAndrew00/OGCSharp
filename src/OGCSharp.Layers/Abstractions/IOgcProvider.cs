@@ -1,9 +1,9 @@
 ﻿using OGCSharp.Geo.Types;
 using System.Xml;
 
-namespace OGCSharp.Geo.Abstractions
+namespace OGCSharp.Layers.Abstractions
 {
-    public interface IOgcCapabilitiesParser
+    public interface IOgcProvider
     {
         /// <summary>
         /// Parse capabilities for the given url.
