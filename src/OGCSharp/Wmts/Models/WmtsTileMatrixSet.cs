@@ -1,19 +1,26 @@
-﻿using System.Xml.Linq;
+﻿using OGCSharp.Wmts;
+using System.Xml.Linq;
 
 namespace OGCSharp.Geo.Wmts
 {
     internal class WmtsTileMatrixSet : WmtsElement
     {
-
         private IEnumerable<WmtsTileMatrix> tileMatrixes;
         private string identifier;
         private string supportedCrs;
 
-        public WmtsTileMatrixSet(XElement tileMatrixXml) : base(tileMatrixXml)
+        internal override void Parse(XElement node, WmtsParsingContext parsingContext)
         {
-            this.tileMatrixes = this._xmlNode.ElementsUnprefixed(TileMatrixElement).Select(element => new WmtsTileMatrix(element));
-            this.identifier = this._xmlNode.ElementUnprefixed(IdentifierElement)?.Value;
-            this.supportedCrs = this._xmlNode.ElementUnprefixed(SupportedCRSElement)?.Value;
+            this.tileMatrixes = node.ElementsUnprefixed(TileMatrixElement).Select(element =>
+            {
+                var tileMatrix = new WmtsTileMatrix();
+
+                tileMatrix.Parse(element, parsingContext);
+
+                return tileMatrix;
+            });
+            this.identifier = node.ElementUnprefixed(IdentifierElement)?.Value;
+            this.supportedCrs = node.ElementUnprefixed(SupportedCRSElement)?.Value;
         }
 
         public string Identifier => identifier;

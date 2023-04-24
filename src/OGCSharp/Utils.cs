@@ -109,7 +109,7 @@ namespace OGCSharp.Geo
 
         public static string AppendQueryString(this string uri, params (string Key, string Value)[] query)
         {
-            StringBuilder sb = new StringBuilder(uri);
+            StringBuilder sb = new StringBuilder(uri.Trim('&'));
 
             // If uri doesnt contain any '?' then it must be append to the end of it.
             if (!uri.Contains("?"))

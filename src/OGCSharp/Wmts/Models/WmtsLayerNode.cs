@@ -1,4 +1,6 @@
 ﻿using OGCSharp;
+using OGCSharp.Wmts;
+using OGCSharp.Wmts.Elements;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,24 +13,43 @@ namespace OGCSharp.Geo.Wmts
 
     internal class WmtsLayerNode : WmtsElement
     {
-        private WmtsTileMatrixSetLink tileMatrixSetLinkFacade;
+        private WmtsTileMatrixSetLink _tileMatrixSetLinkFacade;
 
-        public WmtsLayerNode(XElement layerXml) : base(layerXml)
+        internal override void Parse(XElement node, WmtsParsingContext parsingContext)
         {
-            this.tileMatrixSetLinkFacade = new WmtsTileMatrixSetLink(this._xmlNode.ElementUnprefixed(TileMatrixSetLinkElement));
+            this._tileMatrixSetLinkFacade = new WmtsTileMatrixSetLink();
+            this._tileMatrixSetLinkFacade.Parse(node.ElementUnprefixed(TileMatrixSetLinkElement), parsingContext);
+
+            Dimensions = node.ElementsUnprefixed(DimensionNode).Select(
+                dimensionXml =>
+                {
+                    XElement identifier = dimensionXml.ElementUnprefixed(WmtsElement.IdentifierElement);
+                    XElement value = dimensionXml.ElementUnprefixed(WmtsElement.DefaultElement) ?? dimensionXml.ElementUnprefixed(WmtsElement.ValueElement);
+
+                    return new WmtsDimension(identifier.Value, value.Value);
+                }).ToList();
+
+
+            Title = node.ElementUnprefixed(TitleElement)?.Value;
+            Identifier = node.ElementUnprefixed(IdentifierElement)?.Value;
+            Styles = node.ElementsUnprefixed(StyleElement).ToList();
+            ResourceUrls = node.ElementsUnprefixed(ResourceURLElement).ToList();
         }
 
-        public List<XElement> Dimensions => this._xmlNode.ElementsUnprefixed(DimensionNode).ToList();
+        public List<WmtsDimension> Dimensions { get; internal set; }
 
-        public string Title => this._xmlNode.ElementUnprefixed(TitleElement)?.Value;
+        public string Title { get; internal set; }
 
-        public string Identifier => this._xmlNode.ElementUnprefixed(IdentifierElement)?.Value;
+        public string Identifier { get; internal set; }
 
-        public WmtsTileMatrixSetLink TileMatrixSetLink => this.tileMatrixSetLinkFacade;
+        public WmtsTileMatrixSetLink TileMatrixSetLink => this._tileMatrixSetLinkFacade;
 
-        public List<XElement> Styles => this._xmlNode.ElementsUnprefixed(StyleElement).ToList();
+        // todo: change to strongly typed.
+        public List<XElement> Styles { get; internal set; }
 
-        public List<XElement> ResourceUrls => this._xmlNode.ElementsUnprefixed(ResourceURLElement).ToList();
+        // todo: change to strongly typed.
+        public List<XElement> ResourceUrls { get; internal set; }
+
 
     }
 

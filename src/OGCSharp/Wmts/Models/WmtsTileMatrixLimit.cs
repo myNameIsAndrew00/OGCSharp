@@ -1,20 +1,27 @@
 ﻿using OGCSharp;
+using OGCSharp.Wmts;
 using System.Xml.Linq;
 
 namespace OGCSharp.Geo.Wmts
 {
     internal class WmtsTileMatrixLimit : WmtsElement
     {
-        public WmtsTileMatrixLimit(XElement xmlNode) : base(xmlNode)
-        {            
+        internal override void Parse(XElement node, WmtsParsingContext parsingContext)
+        {
+            TileMatrix = node.ElementUnprefixed(TileMatrixElement)?.Value;
+            MinTileRow = Convert.ToInt32(node.ElementUnprefixed(MinTileRowElement)?.Value ?? "0");
+            MaxTileRow = Convert.ToInt32(node.ElementUnprefixed(MaxTileRowElement)?.Value ?? "0");
+            MinTileCol = Convert.ToInt32(node.ElementUnprefixed(MinTileColElement)?.Value ?? "0");
+            MaxTileCol = Convert.ToInt32(node.ElementUnprefixed(MaxTileColElement)?.Value ?? "0");
         }
 
-        public string TileMatrix => this._xmlNode.ElementUnprefixed(TileMatrixElement)?.Value;
+        public string TileMatrix { get; internal set; }
 
-        public int MinTileRow => Convert.ToInt32(this._xmlNode.ElementUnprefixed(MinTileRowElement)?.Value ?? "0");
-        public int MaxTileRow => Convert.ToInt32(this._xmlNode.ElementUnprefixed(MaxTileRowElement)?.Value ?? "0");
-        public int MinTileCol => Convert.ToInt32(this._xmlNode.ElementUnprefixed(MinTileColElement)?.Value ?? "0");
-        public int MaxTileCol => Convert.ToInt32(this._xmlNode.ElementUnprefixed(MaxTileColElement)?.Value ?? "0");
+        public int MinTileRow { get; internal set; }
+        public int MaxTileRow { get; internal set; }
+        public int MinTileCol { get; internal set; }
+        public int MaxTileCol { get; internal set; }
 
-    }
-}
+
+    }      
+}          

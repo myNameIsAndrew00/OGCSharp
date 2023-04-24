@@ -1,8 +1,6 @@
 ﻿using OGCSharp.Geo.Abstractions;
 using OGCSharp.Geo.Types;
 using OGCSharp.Wmts.Elements;
-using System.Reflection.Emit;
-using System.Xml.Linq;
 
 namespace OGCSharp.Geo.Wmts
 {
@@ -34,13 +32,7 @@ namespace OGCSharp.Geo.Wmts
 
         private void Init(WmtsDocument documentNode, WmtsLayerNode layerNode)
         {
-            layerNode.Dimensions.ForEach(dimensionXml =>
-            {
-                XElement identifier = dimensionXml.ElementUnprefixed(WmtsElement.IdentifierElement);
-                XElement value = dimensionXml.ElementUnprefixed(WmtsElement.DefaultElement) ?? dimensionXml.ElementUnprefixed(WmtsElement.ValueElement);
-
-                this.Options.Dimensions.Add(new(identifier.Value, value.Value));
-            });
+            this.Options.Dimensions = layerNode.Dimensions;
 
             this.Name = layerNode.Identifier;
             this.Title = layerNode.Title;

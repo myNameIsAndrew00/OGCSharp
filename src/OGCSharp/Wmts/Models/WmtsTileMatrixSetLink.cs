@@ -1,4 +1,5 @@
 ﻿using OGCSharp;
+using OGCSharp.Wmts;
 using System.Xml.Linq;
 
 namespace OGCSharp.Geo.Wmts
@@ -7,16 +8,28 @@ namespace OGCSharp.Geo.Wmts
     {
         private IEnumerable<WmtsTileMatrixLimit> limits;
 
-        public WmtsTileMatrixSetLink(XElement tileMatrixSetXml) : base(tileMatrixSetXml)
+
+        internal override void Parse(XElement node, WmtsParsingContext parsingContext)
         {
-            limits = this._xmlNode.ElementUnprefixed(TileMatrixSetLimitsElement)
+            limits = node.ElementUnprefixed(TileMatrixSetLimitsElement)
                                  ?.ElementsUnprefixed(TileMatrixLimitsElement)
-                                 .Select(element => new WmtsTileMatrixLimit(element));
+                                 .Select(element =>
+                                 {
+                                     var tileMatrixLimit = new WmtsTileMatrixLimit();
+
+                                     tileMatrixLimit.Parse(element, parsingContext);
+
+                                     return tileMatrixLimit;
+                                 });
+
+            TileMatrixSet = node.ElementUnprefixed(TileMatrixSetElement)?.Value;
         }
 
-        public string TileMatrixSet => this._xmlNode.ElementUnprefixed(TileMatrixSetElement)?.Value;
+
+        public string TileMatrixSet { get; internal set; }
 
         public IEnumerable<WmtsTileMatrixLimit> TileMatrixLimits => limits;
+
 
     }
 

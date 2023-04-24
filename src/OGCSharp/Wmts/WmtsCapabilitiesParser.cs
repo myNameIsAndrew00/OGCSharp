@@ -4,6 +4,7 @@ using OGCSharp;
 using OGCSharp.Wmts.Elements;
 using System.Xml;
 using System.Xml.Linq;
+using OGCSharp.Wmts;
 
 namespace OGCSharp.Geo.Wmts
 {
@@ -33,7 +34,10 @@ namespace OGCSharp.Geo.Wmts
             }
 
             // Parse the capabilities document from XElement node. 
-            WmtsDocument capabilitiesDocument = new WmtsDocument(capabilitiesElement);
+            WmtsDocument capabilitiesDocument = new WmtsDocument();
+            WmtsParsingContext parsingContext = new WmtsParsingContext();
+
+            capabilitiesDocument.Parse(capabilitiesElement, parsingContext);
 
             // Create layers based on document and inner layers.
             return capabilitiesDocument.Layers.Select(layerNode => new WmtsLayer(capabilitiesDocument, layerNode))

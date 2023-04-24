@@ -1,4 +1,5 @@
 ﻿using OGCSharp;
+using OGCSharp.Wmts;
 using System.Xml.Linq;
 
 namespace OGCSharp.Geo.Wmts
@@ -15,19 +16,32 @@ namespace OGCSharp.Geo.Wmts
 
         private WmtsOperationMetadata _operationMetadata;
 
-        public WmtsDocument(XElement documentXml) : base(documentXml)
+        internal override void Parse(XElement node, WmtsParsingContext parsingContext)
         {
-            _tileMatrixSets = this._xmlNode.ElementUnprefixed(ContentsElement)
+            _tileMatrixSets = node.ElementUnprefixed(ContentsElement)
                             .ElementsUnprefixed(TileMatrixSetElement)
-                            .Select(element => new WmtsTileMatrixSet(element));
+                            .Select(element => {
+                                var matrixSet = new WmtsTileMatrixSet();
 
-            _layers = this._xmlNode.ElementUnprefixed(ContentsElement)
+                                matrixSet.Parse(element, parsingContext);
+
+                                return matrixSet;
+                                });
+
+            _layers = node.ElementUnprefixed(ContentsElement)
                             .ElementsUnprefixed(LayerNode)
-                            .Select(element => new WmtsLayerNode(element));
+                            .Select(element => {
+                                var layer = new WmtsLayerNode();
 
-            _operationMetadata = new WmtsOperationMetadata(this._xmlNode.ElementUnprefixed(OperationsMetadataNode));
-            
+                                layer.Parse(element, parsingContext);   
+
+                                return layer;
+                                });
+
+            _operationMetadata = new WmtsOperationMetadata();
+            _operationMetadata.Parse(node.ElementUnprefixed(OperationsMetadataNode), parsingContext);
         }
+
 
         public WmtsOperationMetadata Operation => _operationMetadata;
 
@@ -35,6 +49,7 @@ namespace OGCSharp.Geo.Wmts
 
         public IEnumerable<WmtsTileMatrixSet> TileMatrixSets => _tileMatrixSets;
 
+    
     }
 
 

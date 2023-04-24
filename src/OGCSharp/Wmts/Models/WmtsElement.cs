@@ -1,4 +1,6 @@
-﻿using System;
+﻿using OGCSharp.Wms;
+using OGCSharp.Wmts;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +9,7 @@ using System.Xml.Linq;
 
 namespace OGCSharp.Geo.Wmts
 {
-    internal class WmtsElement
+    internal abstract class WmtsElement
     {
         public const string OperationsMetadataNode = "OperationsMetadata";
         public const string OperationNode = "Operation";
@@ -40,18 +42,14 @@ namespace OGCSharp.Geo.Wmts
         public const string MaxTileColElement = "MaxTileCol";
         public const string SupportedCRSElement = "SupportedCRS";
         public const string ConstraintElement = "Constraint";
-        public const string AllowedValuesElement = "AllowedValues"; 
+        public const string AllowedValuesElement = "AllowedValues";
 
-        public static readonly XNamespace OwsNamespace = "http://www.opengis.net/ows/1.1";
-        public static readonly XNamespace XLinkNamespace = "http://www.w3.org/1999/xlink";
-
-
-
-        protected XElement _xmlNode;
-        public WmtsElement(XElement xmlNode)
-        {
-            this._xmlNode = xmlNode;
-        }
+        /// <summary>
+        /// Try to parse a given node into current object.
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="parsingContext"></param>
+        internal abstract void Parse(XElement node, WmtsParsingContext parsingContext);
     }
 
 }

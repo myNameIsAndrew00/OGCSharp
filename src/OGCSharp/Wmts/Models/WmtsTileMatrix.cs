@@ -1,27 +1,36 @@
 ﻿using System.Xml.Linq;
 using OGCSharp;
+using OGCSharp.Wmts;
 
 namespace OGCSharp.Geo.Wmts
 {
     internal class WmtsTileMatrix : WmtsElement
     {
-        public WmtsTileMatrix(XElement tileMatrixXml) : base(tileMatrixXml)
+        internal override void Parse(XElement node, WmtsParsingContext parsingContext)
         {
+            Identifier = node.ElementUnprefixed(IdentifierElement).Value;
+            ScaleDenominator = node.ElementUnprefixed(ScaleDenominatorElement).Value;
+            TopLeftCorner = node.ElementUnprefixed(TopLeftCornerElement).Value;
+            TileHeight = Convert.ToInt32(node.ElementUnprefixed(TileHeightElement).Value);
+            TileWidth = Convert.ToInt32(node.ElementUnprefixed(TileWidthElement).Value);
+            MatrixWidth = Convert.ToInt32(node.ElementUnprefixed(MatrixWidthElement).Value);
+            MatrixHeight = Convert.ToInt32(node.ElementUnprefixed(MatrixHeightElement).Value);
         }
 
-        public string Identifier => this._xmlNode.ElementUnprefixed(IdentifierElement).Value;
+        public string Identifier { get; internal set; }
 
-        public string ScaleDenominator => this._xmlNode.ElementUnprefixed(ScaleDenominatorElement).Value;
+        public string ScaleDenominator { get; internal set; }  
 
-        public string TopLeftCorner => this._xmlNode.ElementUnprefixed(TopLeftCornerElement).Value;
+        public string TopLeftCorner { get; internal set; } 
 
-        public int TileHeight => Convert.ToInt32(this._xmlNode.ElementUnprefixed(TileHeightElement).Value);
+        public int TileHeight { get; internal set; }
 
-        public int TileWidth => Convert.ToInt32(this._xmlNode.ElementUnprefixed(TileWidthElement).Value);
+        public int TileWidth { get; internal set; }
 
-        public int MatrixWidth => Convert.ToInt32(this._xmlNode.ElementUnprefixed(MatrixWidthElement).Value);
+        public int MatrixWidth { get; internal set; }
 
-        public int MatrixHeight => Convert.ToInt32(this._xmlNode.ElementUnprefixed(MatrixHeightElement).Value);
+        public int MatrixHeight { get; internal set; }
+
 
     }
 
