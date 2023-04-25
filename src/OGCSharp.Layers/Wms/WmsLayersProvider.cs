@@ -17,33 +17,45 @@ namespace OGCSharp.Layers.Wms
 
         public OgcServerType Type => OgcServerType.WMS;
 
-        public async Task<IReadOnlyCollection<ILayer>?> GetLayersAsync(string url) => GetLayersInternal(await _parser.ParseCapabilitiesAsync(url));
+        public async Task<IReadOnlyCollection<ILayer>?> GetLayersAsync(string url) {
+            
+            var content = await Utils.DownloadCapabilitesAsync(url);
 
-        public async Task<IReadOnlyCollection<ILayer>?> GetLayersAsync(XmlDocument xmlDocument) => GetLayersInternal(await _parser.ParseCapabilitiesAsync(xmlDocument));    
+            return GetLayersInternal(content);
+        }
 
+        public async Task<IReadOnlyCollection<ILayer>?> GetLayersAsync(XmlDocument xmlDocument) => GetLayersInternal(xmlDocument);
 
-        private IReadOnlyCollection<ILayer>? GetLayersInternal(WmsDocument? document)
+        #region Private
+
+        private IReadOnlyCollection<ILayer>? GetLayersInternal(XmlDocument? xmlDocument)
         {
-            if(document == null)
+            if (xmlDocument != null)
             {
-                return null;
-            }
+                if (_parser.TryParse(xmlDocument, out var document))
+                {
+                    if (document == null)
+                    {
+                        return null;
+                    }
 
-            try
-            {
-                List<WmsLayer> layers = new List<WmsLayer>();
+                    try
+                    {
+                        List<WmsLayer> layers = new List<WmsLayer>();
 
-                // Create layers based on document and inner layers.
-                ParseRecursive(
-                    layer: document.Capability.LayerGroup,
-                    wmsDocument: document,
-                    parentLayer: null,
-                    wmsLayers: ref layers);
+                        // Create layers based on document and inner layers.
+                        ParseRecursive(
+                            layer: document.Capability.LayerGroup,
+                            wmsDocument: document,
+                            parentLayer: null,
+                            wmsLayers: ref layers);
 
-                return layers.Cast<ILayer>().ToList();
-            }
-            catch
-            {
+                        return layers.Cast<ILayer>().ToList();
+                    }
+                    catch
+                    {
+                    }
+                }
             }
 
             return null;
@@ -70,5 +82,8 @@ namespace OGCSharp.Layers.Wms
             {
             }
         }
+
+        #endregion
+
     }
 }

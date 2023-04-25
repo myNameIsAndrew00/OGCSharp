@@ -1,4 +1,5 @@
 ﻿using OGCSharp.Geo.Types;
+using OGCSharp.Geo.WMS;
 using OGCSharp.Geo.Wmts;
 using OGCSharp.Layers.Abstractions;
 using System.Xml;
@@ -16,22 +17,44 @@ namespace OGCSharp.Layers.Wmts
             _parser = new WmtsCapabilitiesParser();
         }
 
-        public async Task<IReadOnlyCollection<ILayer>?> GetLayersAsync(string url) => GetLayersInternal(await _parser.ParseCapabilitiesAsync(url));
-
-
-        public async Task<IReadOnlyCollection<ILayer>?> GetLayersAsync(XmlDocument xmlDocument) => GetLayersInternal(await _parser.ParseCapabilitiesAsync(xmlDocument));       
-
-
-        private IReadOnlyCollection<ILayer>? GetLayersInternal(WmtsDocument? document)
+        public async Task<IReadOnlyCollection<ILayer>?> GetLayersAsync(string url)
         {
-            if(document == null)
+            var content = await Utils.DownloadCapabilitesAsync(url);
+
+            return GetLayersInternal(content);
+        }
+
+        public async Task<IReadOnlyCollection<ILayer>?> GetLayersAsync(XmlDocument xmlDocument) => GetLayersInternal(xmlDocument);
+
+        #region Private
+
+        private IReadOnlyCollection<ILayer>? GetLayersInternal(XmlDocument? xmlDocument)
+        {
+            if (xmlDocument != null)
             {
-                return null;
+                if (_parser.TryParse(xmlDocument, out var document))
+                {
+                    if (document == null)
+                    {
+                        return null;
+                    }
+
+                    try
+                    {
+                        // Create layers based on document and inner layers.
+                        return document.Layers.Select(layerNode => new WmtsLayer(document, layerNode))
+                                                          .Cast<ILayer>()
+                                                          .ToList();
+                    }
+                    catch
+                    {
+                    }
+                }
             }
 
-            // Create layers based on document and inner layers.
-            return document.Layers.Select(layerNode => new WmtsLayer(document, layerNode))
-                                              .ToList();
+            return null;
         }
+
+        #endregion
     }
 }

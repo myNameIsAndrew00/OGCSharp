@@ -11,13 +11,13 @@ namespace OGCSharp.Geo.WMS
     public class WmsCapabilitiesParser
     {
 
-        public WmsParsingResult TryParse(string xml, out WmsDocument? wmsDocument) => TryParse(XElement.Parse(xml), out wmsDocument);
+        public bool TryParse(string xml, out WmsDocument? wmsDocument) => TryParse(XElement.Parse(xml), out wmsDocument);
 
 
-        public WmsParsingResult TryParse(XmlDocument xmlDocument, out WmsDocument? wmsDocument) => TryParse(xmlDocument.ToXElement(), out wmsDocument);
+        public bool TryParse(XmlDocument xmlDocument, out WmsDocument? wmsDocument) => TryParse(xmlDocument.ToXElement(), out wmsDocument);
 
 
-        private WmsParsingResult TryParse(XElement? capabilityElement, out WmsDocument? wmsDocument)
+        private bool TryParse(XElement? capabilityElement, out WmsDocument? wmsDocument)
         { 
             var capabilitiesData = ParseCapabilitiesInternal(capabilityElement);
 
@@ -25,16 +25,14 @@ namespace OGCSharp.Geo.WMS
             // If not, that means an error ocurred during xml iteration. 
             if (capabilitiesData.Document == null)
             {
-                WmsParsingResult errorResult = capabilitiesData.ParsingContext?.ToParsingResult() ?? new WmsParsingResult() { FailedReading = true };
-
                 wmsDocument = null;
 
-                return errorResult;
+                return false;
             }
 
             wmsDocument = capabilitiesData.Document;
 
-            return capabilitiesData.ParsingContext!.ToParsingResult();
+            return capabilitiesData.ParsingContext != null && !capabilitiesData.ParsingContext.ParsingErrors.Any();
         }
 
 
